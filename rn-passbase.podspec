@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license          = package['license']
   s.author           = package['author']
   s.platform         = :ios, '11.0'
-  s.source           = { :git => 'file://' + __dir__ }
+  s.source           = { :git => "https://github.com/react-native-community/react-native-webview.git", :tag => "v#{s.version}" }
   s.source_files     = 'ios/**/*.{h,m,swift}'
   s.requires_arc     = true
   s.swift_version    = '5.0'
