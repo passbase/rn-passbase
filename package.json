@@ -1,5 +1,5 @@
 {
-  "name": "@passbase/rn-passbase",
+  "name": "@passbase/react-native-passbase",
   "version": "0.0.1",
   "description": "Official React-Native wrapper for Passbase SDK.",
   "main": "dist/index.js",
@@ -63,5 +63,6 @@
     "*.md",
     "*.podspec",
     "LICENSE"
-  ]
+  ],
+  "dependencies": {}
 }
