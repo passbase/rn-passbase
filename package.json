@@ -61,7 +61,7 @@
     ".editorconfig",
     "tslint.json",
     "*.md",
-    "RNPassbase.podspec",
+    "@passbase/rn-passbase.podspec",
     "LICENSE"
   ],
   "dependencies": {}
