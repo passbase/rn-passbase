@@ -1,9 +1,10 @@
 {
-  "name": "react-native-passbase",
-  "version": "0.0.1",
+  "name": "@passbase/react-native-passbase",
+  "version": "0.0.8",
   "description": "Official React-Native wrapper for Passbase SDK.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "podname": "react-native-passbase",
   "keywords": [
     "react-native",
     "rn-passbase",
