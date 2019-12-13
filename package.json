@@ -62,7 +62,7 @@
     ".editorconfig",
     "tslint.json",
     "*.md",
-    "@passbase/rn-passbase.podspec",
+    "*.podspec",
     "LICENSE"
   ],
   "dependencies": {}
