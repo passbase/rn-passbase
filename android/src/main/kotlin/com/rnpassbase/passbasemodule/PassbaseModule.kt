@@ -25,7 +25,6 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     //reference to passbase instance.
     var passbaseRef: Passbase? = null
   }
-
   // return name of the module to be used in JS side.
   override fun getName(): String {
     return reactClass
@@ -50,6 +49,17 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     try {
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
+        passbaseRef!!.onCancelPassbase {
+          val map = Arguments.createMap()
+          sendEvent(reactApplicationContext, "onCancelPassbase", map);
+        }
+
+        passbaseRef!!.onCompletePassbase { authKey ->
+          val params = Arguments.createMap();
+          params.putString("authKey", authKey);
+          sendEvent(reactApplicationContext, "onCompletePassbase", params);
+        }
+
       }
 
       val hasAdditionalAttributes = mapKeysCount(additionalAttribs) != 0
@@ -83,6 +93,17 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     try {
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
+        passbaseRef!!.onCancelPassbase {
+          val map = Arguments.createMap()
+          sendEvent(reactApplicationContext, "onCancelPassbase", map);
+        }
+
+        passbaseRef!!.onCompletePassbase { authKey ->
+          val params = Arguments.createMap();
+          params.putString("authKey", authKey);
+          sendEvent(reactApplicationContext, "onCompletePassbase", params);
+        }
+
       }
 
       val hasAdditionalAttributes = mapKeysCount(additionalAttribs) != 0
@@ -117,18 +138,6 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
         throw Exception(INITIALZE_PASSBASE_TO_START_VERIFICATION)
       }
 
-      passbaseRef!!.onCancelPassbase {
-        println("PassbaseModule onCancelPassbase")
-        sendEvent(reactApplicationContext, "onCancelPassbase", Arguments.createMap());
-      }
-
-      passbaseRef!!.onCompletePassbase { authKey ->
-        println("PassbaseModule onCompletePassbase $authKey")
-        val params = Arguments.createMap();
-        params.putString("authKey", authKey);
-        sendEvent(reactApplicationContext, "onCompletePassbase", params);
-      }
-
       passbaseRef!!.startVerification()
       val map = Arguments.createMap()
       map.putBoolean(SUCCESS, true)
@@ -147,19 +156,6 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     try {
       if (passbaseRef == null) {
         throw Exception(INITIALZE_PASSBASE_TO_START_VERIFICATION)
-      }
-
-      passbaseRef!!.onCancelPassbase {
-        val map = Arguments.createMap()
-        println("PassbaseModule onCancelPassbase")
-        sendEvent(reactApplicationContext, "onCancelPassbase", map);
-      }
-
-      passbaseRef!!.onCompletePassbase { authKey ->
-        println("PassbaseModule onCompletePassbase $authKey")
-        val params = Arguments.createMap();
-        params.putString("authKey", authKey);
-        sendEvent(reactApplicationContext, "onCompletePassbase", params);
       }
 
       passbaseRef!!.startVerification()

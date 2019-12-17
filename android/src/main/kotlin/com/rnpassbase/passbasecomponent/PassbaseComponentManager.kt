@@ -1,13 +1,16 @@
 package com.rnpassbase.passbasecomponent
 
-import android.graphics.Color
+import android.util.Log
+import android.view.ViewGroup
+import android.widget.Toast
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
-import com.facebook.react.uimanager.annotations.ReactProp
+import com.passbase.passbase_sdk.PassbaseButton
+import com.rnpassbase.passbasemodule.PassbaseModule
 
 @ReactModule(name = PassbaseComponentManager.reactClass)
-class PassbaseComponentManager : SimpleViewManager<PassbaseComponent>() {
+class PassbaseComponentManager : SimpleViewManager<PassbaseButton>() {
 
   companion object {
     const val reactClass = "RNPassbaseComponent"
@@ -17,12 +20,22 @@ class PassbaseComponentManager : SimpleViewManager<PassbaseComponent>() {
     return reactClass
   }
 
-  override fun createViewInstance(reactContext: ThemedReactContext): PassbaseComponent {
-    return PassbaseComponent(reactContext)
-  }
+  override fun createViewInstance(reactContext: ThemedReactContext): PassbaseButton {
+    val passbaseButton: PassbaseButton = PassbaseButton(reactContext)
 
-  @ReactProp(name = "color", customType = "Color", defaultInt = Color.RED)
-  fun setColor(view: PassbaseComponent, color: Int) {
-    view.setColor(color)
+    passbaseButton.setOnClickListener {
+      try {
+        if (PassbaseModule.passbaseRef !== null) {
+          PassbaseModule.passbaseRef!!.startVerification()
+        } else {
+          Toast.makeText(reactContext, "Passbase Module must be initialized before trying to start verification", Toast.LENGTH_LONG).show()
+          print("Passbase Module must be initialized before trying to start verification")
+        }
+      } catch (ex: Exception) {
+        Toast.makeText(reactContext, ex.message, Toast.LENGTH_LONG).show()
+        print(ex)
+      }
+    }
+    return passbaseButton
   }
 }
