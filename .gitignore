@@ -47,4 +47,3 @@ buck-out/
 dist
 .ionide/
 *.tgz
-example/*
