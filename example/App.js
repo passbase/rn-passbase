@@ -90,7 +90,7 @@ class App extends React.Component {
           }
         </TouchableOpacity>
       {
-        <PassbaseButton style={{ backgroundColor: 'white' }}/>
+        initSucceed && <PassbaseButton style={{ backgroundColor: 'white' }}/>
       }
     </View>);
   }
