@@ -77,7 +77,7 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     @objc func setLoadingIndicatorColor (_ loadingIndicatorColor: String) {
         if (!loadingIndicatorColor.isEmpty) {
-            Passbase.buttonUI.buttonBgColor = UIColor.init(loadingIndicatorColor)
+            Passbase.buttonUI.loadingIndicatorColor = UIColor.init(loadingIndicatorColor)
         }
     }
 

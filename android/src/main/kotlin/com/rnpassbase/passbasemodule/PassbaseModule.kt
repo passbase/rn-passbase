@@ -1,5 +1,7 @@
 package com.rnpassbase.passbasemodule
 
+import android.graphics.Color
+import android.widget.Toast
 import androidx.annotation.Nullable
 import com.facebook.react.bridge.*
 import com.facebook.react.module.annotations.ReactModule
@@ -164,6 +166,83 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
       onSuccess.invoke(map)
     } catch (e: Exception) {
       onFailure.invoke(ERROR_START_VERIFICATION, e)
+    }
+  }
+
+  @ReactMethod
+  fun setLoadingIndicatorColor (loadingIndicatorColor: String) {
+    try {
+      if (!loadingIndicatorColor.isEmpty() && passbaseRef != null) {
+        passbaseRef!!.setLoadingIndicatorColor(Color.parseColor(loadingIndicatorColor))
+      }
+    } catch (ex: Exception) {
+      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
+    }
+  }
+
+  @ReactMethod
+  fun setActionButtonBgColor (actionButtonBgColor: String) {
+    try {
+      if (!actionButtonBgColor.isEmpty() && passbaseRef != null) {
+        passbaseRef!!.setActionButtonBgColor(Color.parseColor(actionButtonBgColor))
+      }
+    } catch (ex: Exception) {
+      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
+    }
+  }
+
+  @ReactMethod
+  fun setActionButtonDeactivatedBgColor (actionButtonDeactivatedBgColor: String) {
+    try {
+      if (!actionButtonDeactivatedBgColor.isEmpty() && passbaseRef != null) {
+        passbaseRef!!.setActionButtonDeactivatedBgColor(Color.parseColor(actionButtonDeactivatedBgColor))
+      }
+    } catch (ex: Exception) {
+      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
+    }
+  }
+
+  @ReactMethod
+  fun setActionButtonTextColor (actionButtonTextColor: String) {
+    try {
+      if (!actionButtonTextColor.isEmpty() && passbaseRef != null) {
+        passbaseRef!!.setActionButtonTextColor(Color.parseColor(actionButtonTextColor))
+      }
+    } catch (ex: Exception) {
+      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
+    }
+  }
+
+  @ReactMethod
+  fun setDisclaimerTextColor (disclaimerTextColor: String) {
+    try {
+      if (!disclaimerTextColor.isEmpty() && passbaseRef != null) {
+        passbaseRef!!.setDisclaimerTextColor(Color.parseColor(disclaimerTextColor))
+      }
+    } catch (ex: Exception) {
+      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
+    }
+  }
+
+  @ReactMethod
+  fun setTitleTextColor (titleTextColor: String) {
+    try {
+      if (!titleTextColor.isEmpty() && passbaseRef != null) {
+        passbaseRef!!.setTitleTextColor(Color.parseColor(titleTextColor))
+      }
+    } catch (ex: Exception) {
+      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
+    }
+  }
+
+  @ReactMethod
+  fun setSubtitleTextColor (subtitleTextColor: String) {
+    try {
+      if (!subtitleTextColor.isEmpty() && passbaseRef != null) {
+        passbaseRef!!.setSubtitleTextColor(Color.parseColor(subtitleTextColor))
+      }
+    } catch (ex: Exception) {
+      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
     }
   }
 
