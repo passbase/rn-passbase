@@ -69,6 +69,54 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
         }
     }
 
+    @objc func setButtonBgColor (_ buttonBgColor: String) {
+        if (!buttonBgColor.isEmpty) {
+            Passbase.buttonUI.buttonBgColor = UIColor.init(buttonBgColor)
+        }
+    }
+
+    @objc func setLoadingIndicatorColor (_ loadingIndicatorColor: String) {
+        if (!loadingIndicatorColor.isEmpty) {
+            Passbase.buttonUI.buttonBgColor = UIColor.init(loadingIndicatorColor)
+        }
+    }
+
+    @objc func setActionButtonBgColor (_ actionButtonBgColor: String) {
+        if (!actionButtonBgColor.isEmpty) {
+            Passbase.buttonUI.actionButtonBgColor = UIColor.init(actionButtonBgColor)
+        }
+    }
+
+    @objc func setActionButtonDeactivatedBgColor (_ actionButtonDeactivatedBgColor: String) {
+        if (!actionButtonDeactivatedBgColor.isEmpty) {
+            Passbase.buttonUI.actionButtonDeactivatedBgColor = UIColor.init(actionButtonDeactivatedBgColor)
+        }
+    }
+
+    @objc func setActionButtonTextColor (_ actionButtonTextColor: String) {
+        if (!actionButtonTextColor.isEmpty) {
+            Passbase.buttonUI.actionButtonTextColor = UIColor.init(actionButtonTextColor)
+        }
+    }
+
+    @objc func setDisclaimerTextColor (_ disclaimerTextColor: String) {
+        if (!disclaimerTextColor.isEmpty) {
+            Passbase.buttonUI.disclaimerTextColor = UIColor.init(disclaimerTextColor)
+        }
+    }
+
+    @objc func setTitleTextColor (_ titleTextColor: String) {
+        if (!titleTextColor.isEmpty) {
+            Passbase.buttonUI.titleTextColor = UIColor.init(titleTextColor)
+        }
+    }
+
+    @objc func setSubtitleTextColor (_ subtitleTextColor: String) {
+        if (!subtitleTextColor.isEmpty) {
+            Passbase.buttonUI.subtitleTextColor = UIColor.init(subtitleTextColor)
+        }
+    }
+
     func didCompletePassbaseVerification (authenticationKey: String) {
         super.sendEvent(withName: "onCompletePassbase", body: ["authKey": authenticationKey])
     }
