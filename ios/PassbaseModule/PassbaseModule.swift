@@ -53,7 +53,7 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     @objc func startVerification(_ resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         do {
-                try Passbase.startVerification(from: (UIApplication.shared.keyWindow?.rootViewController)!)
+                try Passbase.startVerification(from: RCTPresentedViewController()!)
             resolve(["success": true])
         } catch {
             reject("error_starting_verification", "error_starting_verification", NSError())
@@ -62,7 +62,7 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     @objc func startVerificationWithCB(_ onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
         do {
-                try Passbase.startVerification(from: (UIApplication.shared.keyWindow?.rootViewController)!)
+                try Passbase.startVerification(from: RCTPresentedViewController()!)
             onSuccess([["success": true]])
         } catch {
             onFailure([["error_starting_verification":"error_starting_verification"]])
