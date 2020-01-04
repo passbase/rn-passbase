@@ -10,7 +10,9 @@
     "rn-passbase",
     "react-native-passbase",
     "passbase",
-    "passbase-sdk"
+    "passbase-sdk",
+    "react native",
+    "react-native passbase"
   ],
   "author": "Mathias",
   "license": "MIT",
