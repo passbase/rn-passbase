@@ -12,6 +12,4 @@
   return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_VIEW_PROPERTY(color, UIColor)
-
 @end
