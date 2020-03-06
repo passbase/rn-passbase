@@ -51,12 +51,12 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     try {
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
-        passbaseRef!!.onCancelPassbase {
+        passbaseRef!!.onCancelPassbaseVerification {
           val map = Arguments.createMap()
           sendEvent(reactApplicationContext, "onCancelPassbase", map);
         }
 
-        passbaseRef!!.onCompletePassbase { authKey ->
+        passbaseRef!!.onCompletePassbaseVerification { authKey ->
           val params = Arguments.createMap();
           params.putString("authKey", authKey);
           sendEvent(reactApplicationContext, "onCompletePassbase", params);
@@ -95,12 +95,12 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     try {
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
-        passbaseRef!!.onCancelPassbase {
+        passbaseRef!!.onCancelPassbaseVerification {
           val map = Arguments.createMap()
           sendEvent(reactApplicationContext, "onCancelPassbase", map);
         }
 
-        passbaseRef!!.onCompletePassbase { authKey ->
+        passbaseRef!!.onCompletePassbaseVerification { authKey ->
           val params = Arguments.createMap();
           params.putString("authKey", authKey);
           sendEvent(reactApplicationContext, "onCompletePassbase", params);
