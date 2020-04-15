@@ -44,6 +44,5 @@ buck-out/
 \.buckd/
 *.keystore
 
-dist
 .ionide/
 *.tgz
