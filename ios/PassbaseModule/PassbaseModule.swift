@@ -73,6 +73,13 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
         }
     }
 
+    /*
+    * Method to enable/disable setTestMode
+    * */
+    @objc func setTestMode(_ enabled: Bool) {
+        // ios sdk yet don't have this method exposed.
+    }
+
     @objc func setButtonBgColor (_ buttonBgColor: String) {
         if (!buttonBgColor.isEmpty) {
             Passbase.buttonUI.buttonBgColor = UIColor.init(buttonBgColor)

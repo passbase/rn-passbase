@@ -1,14 +1,15 @@
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 import { NativeModules } from 'react-native';
 const { RNPassbaseModule } = NativeModules;
-const init = (apiKey, email, additionalAttribs, onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
+const init = (apiKey, email, additionalAttribs, onSuccess, onFailure) => __awaiter(void 0, void 0, void 0, function* () {
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
         (onFailure && typeof onFailure === 'function');
     try {
@@ -42,7 +43,7 @@ const init = (apiKey, email, additionalAttribs, onSuccess, onFailure) => __await
         }
     }
 });
-const startVerification = (onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
+const startVerification = (onSuccess, onFailure) => __awaiter(void 0, void 0, void 0, function* () {
     // todo: make sure to chekc internet connection as verificaiton doesn't start without internet.
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
         (onFailure && typeof onFailure === 'function');
@@ -52,7 +53,7 @@ const startVerification = (onSuccess, onFailure) => __awaiter(this, void 0, void
     return RNPassbaseModule.startVerification();
 });
 const show = (message) => RNPassbaseModule.show(message);
-export const NativeModule = Object.assign({}, RNPassbaseModule, { init,
+export const NativeModule = Object.assign(Object.assign({}, RNPassbaseModule), { init,
     startVerification,
     show, constants: {
         ERROR_INITIALIZING_PASSBASE: RNPassbaseModule.ERROR_INITIALIZING_PASSBASE,

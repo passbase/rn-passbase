@@ -41,6 +41,8 @@ RCT_EXTERN_METHOD(startVerification:(RCTPromiseResolveBlock)resolve reject:(RCTP
 
 RCT_EXTERN_METHOD(startVerificationWithCB:(RCTResponseSenderBlock)onSuccess onFailure:(RCTResponseSenderBlock)onFailure)
 
+RCT_EXTERN_METHOD(setTestMode: (BOOL)enabled)
+
 RCT_EXTERN_METHOD(setButtonBgColor: (NSString *)buttonBgColor)
 
 RCT_EXTERN_METHOD(setLoadingIndicatorColor: (NSString *)loadingIndicatorColor)
