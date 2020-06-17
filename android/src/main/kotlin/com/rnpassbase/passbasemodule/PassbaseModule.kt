@@ -49,6 +49,8 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
   @ReactMethod
   fun initialize (apiKey: String, email: String, additionalAttribs: ReadableMap, promise: Promise) {
     try {
+      Passbase.source = 2
+
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
         passbaseRef!!.onCancelPassbaseVerification {
@@ -93,6 +95,8 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
   @ReactMethod
   fun initWithCB (apiKey: String, email: String, additionalAttribs: ReadableMap, onSuccess: Callback, onFailure: Callback) {
     try {
+      Passbase.source = 2
+
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
         passbaseRef!!.onCancelPassbaseVerification {

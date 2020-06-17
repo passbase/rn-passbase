@@ -10,6 +10,8 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
     @objc func initialize(_ apiKey: String, email: String, additionalParams: NSDictionary, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         do {
             if (!apiKey.isEmpty) {
+                Passbase.source = 2
+
                 Passbase.initialize(publishableApiKey: apiKey)
                 Passbase.delegate = self
                 Passbase.additionalAttributes = additionalParams as! [String : String]
@@ -30,6 +32,8 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
     @objc func initWithCB(_ apiKey: String, email: String, additionalParams: NSDictionary, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
         do {
             if (!apiKey.isEmpty) {
+                Passbase.source = 2
+
                 Passbase.initialize(publishableApiKey: apiKey)
                 Passbase.delegate = self
                 Passbase.additionalAttributes = additionalParams as! [String : String]
