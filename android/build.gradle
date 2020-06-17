@@ -39,7 +39,7 @@ android {
 dependencies {
     compileOnly "com.facebook.react:react-native:${_reactNativeVersion}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${_kotlinVersion}"
-    implementation ('com.passbase:passbase_sdk:1.7.14') {
+    implementation ('com.passbase:passbase_sdk:1.8.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 }
