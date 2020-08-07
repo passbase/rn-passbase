@@ -61,13 +61,6 @@ class App extends React.Component {
         );
         console.log('initRes: ', res);
         if (res && res.success) {
-          PassbaseModule.setLoadingIndicatorColor('#A49E8D');
-          PassbaseModule.setActionButtonBgColor('#504136');
-          PassbaseModule.setActionButtonDeactivatedBgColor('#d2d2d2');
-          PassbaseModule.setActionButtonTextColor('#ffffff');
-          PassbaseModule.setDisclaimerTextColor('#800000');
-          PassbaseModule.setTitleTextColor('#008080');
-          PassbaseModule.setSubtitleTextColor('#B2E6D4');
           this.setState({initSucceed: true, loading: false});
         }
 
@@ -175,7 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btnText: {
-    color: 'white',
+    color: 'blue',
     fontWeight: 'bold',
   },
   component: {

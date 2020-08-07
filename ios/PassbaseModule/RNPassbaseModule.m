@@ -43,20 +43,4 @@ RCT_EXTERN_METHOD(startVerificationWithCB:(RCTResponseSenderBlock)onSuccess onFa
 
 RCT_EXTERN_METHOD(setTestMode: (BOOL)enabled)
 
-RCT_EXTERN_METHOD(setButtonBgColor: (NSString *)buttonBgColor)
-
-RCT_EXTERN_METHOD(setLoadingIndicatorColor: (NSString *)loadingIndicatorColor)
-
-RCT_EXTERN_METHOD(setActionButtonBgColor: (NSString *)actionButtonBgColor)
-
-RCT_EXTERN_METHOD(setActionButtonDeactivatedBgColor: (NSString *)actionButtonDeactivatedBgColor)
-
-RCT_EXTERN_METHOD(setActionButtonTextColor: (NSString *)actionButtonTextColor)
-
-RCT_EXTERN_METHOD(setDisclaimerTextColor: (NSString *)disclaimerTextColor)
-
-RCT_EXTERN_METHOD(setTitleTextColor: (NSString *)titleTextColor)
-
-RCT_EXTERN_METHOD(setSubtitleTextColor: (NSString *)subtitleTextColor)
-
 @end

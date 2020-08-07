@@ -1,12 +1,15 @@
 source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/passbase/zoom-cocoapods-specs.git'
-source 'https://github.com/passbase/cocoapods-react-native-specs.git'
+source 'https://github.com/passbase/microblink-cocoapods-specs.git'
+source 'https://github.com/passbase/zoomauthentication-cocoapods-specs.git'
+source 'https://github.com/passbase/cocoapods-specs.git'
 
 platform :ios, '11.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 target 'example' do
   # Pods for example
+  use_frameworks!
+
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
