@@ -15,7 +15,7 @@
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"onCancelPassbase", @"onCompletePassbase"];
+  return @[@"onCancelPassbase", @"onCompletePassbase", @"onCompletePassbaseVerification", @"onCancelPassbaseVerification", @"onStartPassbaseVerification"];
 }
 
 - (NSDictionary *)constantsToExport

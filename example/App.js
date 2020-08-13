@@ -21,11 +21,15 @@ class App extends React.Component {
   }
   async componentDidMount() {
     this.subscription = new NativeEventEmitter(PassbaseModule);
-    this.subscription.addListener('onCancelPassbase', event => {
-      console.log('##onCancelPassbase##', event);
+    this.subscription.addListener('onCancelPassbaseVerification', event => {
+      console.log('##onCancelPassbaseVerification##', event);
     });
-    this.subscription.addListener('onCompletePassbase', event => {
-      console.log('##onCompletePassbase##', event);
+    this.subscription.addListener('onCompletePassbaseVerification', event => {
+      console.log('##onCompletePassbaseVerification##', event);
+    });
+
+    this.subscription.addListener('onStartPassbaseVerification', event => {
+      console.log('##onStartPassbaseVerification##', event);
     });
   }
 
