@@ -1,6 +1,5 @@
 package com.rnpassbase.passbasemodule
 
-import android.graphics.Color
 import android.widget.Toast
 import androidx.annotation.Nullable
 import com.facebook.react.bridge.*
@@ -54,16 +53,27 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
         passbaseRef!!.onCancelPassbaseVerification {
+          val onCancelPBVerifArgs = Arguments.createMap()
+          sendEvent(reactApplicationContext, "onCancelPassbaseVerification", onCancelPBVerifArgs);
+
+          val onCancelPBArgs = Arguments.createMap()
+          // todo: remove this event in later builds, atm it is for back compatibility.
+          sendEvent(reactApplicationContext, "onCancelPassbase", onCancelPBArgs);
+        }
+
+        passbaseRef!!.onStartPassbaseVerification {
           val map = Arguments.createMap()
-          sendEvent(reactApplicationContext, "onCancelPassbase", map);
+          sendEvent(reactApplicationContext, "onStartPassbaseVerification", map);
         }
 
         passbaseRef!!.onCompletePassbaseVerification { authKey ->
           val params = Arguments.createMap();
           params.putString("authKey", authKey);
+          sendEvent(reactApplicationContext, "onCompletePassbaseVerification", params);
+
+          // todo: remove this event in later builds, atm it is for back compatibility.
           sendEvent(reactApplicationContext, "onCompletePassbase", params);
         }
-
       }
 
       val hasAdditionalAttributes = mapKeysCount(additionalAttribs) != 0
@@ -187,80 +197,21 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     }
   }
 
+  /*
+  * Method to enable/disable Dark theme mode.
+  * @Params isDark: Boolean
+  * if isDark True it enables dark theme else disable dark theme.
+  * */
   @ReactMethod
-  fun setLoadingIndicatorColor (loadingIndicatorColor: String) {
+  fun setTheme (isDark: Boolean) {
     try {
-      if (!loadingIndicatorColor.isEmpty() && passbaseRef != null) {
-        passbaseRef!!.setLoadingIndicatorColor(Color.parseColor(loadingIndicatorColor))
+      if (isDark) {
+        passbaseRef?.setTheme(Passbase.THEME_DARK_ON)
+      } else {
+        passbaseRef?.setTheme(Passbase.THEME_DARK_OFF)
       }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
-    }
-  }
-
-  @ReactMethod
-  fun setActionButtonBgColor (actionButtonBgColor: String) {
-    try {
-      if (!actionButtonBgColor.isEmpty() && passbaseRef != null) {
-        passbaseRef!!.setActionButtonBgColor(Color.parseColor(actionButtonBgColor))
-      }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
-    }
-  }
-
-  @ReactMethod
-  fun setActionButtonDeactivatedBgColor (actionButtonDeactivatedBgColor: String) {
-    try {
-      if (!actionButtonDeactivatedBgColor.isEmpty() && passbaseRef != null) {
-        passbaseRef!!.setActionButtonDeactivatedBgColor(Color.parseColor(actionButtonDeactivatedBgColor))
-      }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
-    }
-  }
-
-  @ReactMethod
-  fun setActionButtonTextColor (actionButtonTextColor: String) {
-    try {
-      if (!actionButtonTextColor.isEmpty() && passbaseRef != null) {
-        passbaseRef!!.setActionButtonTextColor(Color.parseColor(actionButtonTextColor))
-      }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
-    }
-  }
-
-  @ReactMethod
-  fun setDisclaimerTextColor (disclaimerTextColor: String) {
-    try {
-      if (!disclaimerTextColor.isEmpty() && passbaseRef != null) {
-        passbaseRef!!.setDisclaimerTextColor(Color.parseColor(disclaimerTextColor))
-      }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
-    }
-  }
-
-  @ReactMethod
-  fun setTitleTextColor (titleTextColor: String) {
-    try {
-      if (!titleTextColor.isEmpty() && passbaseRef != null) {
-        passbaseRef!!.setTitleTextColor(Color.parseColor(titleTextColor))
-      }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
-    }
-  }
-
-  @ReactMethod
-  fun setSubtitleTextColor (subtitleTextColor: String) {
-    try {
-      if (!subtitleTextColor.isEmpty() && passbaseRef != null) {
-        passbaseRef!!.setSubtitleTextColor(Color.parseColor(subtitleTextColor))
-      }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
+    } catch (e: Exception) {
+      Toast.makeText(reactApplicationContext, e?.localizedMessage, Toast.LENGTH_LONG).show()
     }
   }
 
@@ -269,7 +220,7 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
                         eventName: String,
                         @Nullable params: WritableMap) {
     reactContext
-            .getJSModule(RCTDeviceEventEmitter::class.java)
-            .emit(eventName, params)
+      .getJSModule(RCTDeviceEventEmitter::class.java)
+      .emit(eventName, params)
   }
 }

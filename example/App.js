@@ -65,6 +65,7 @@ class App extends React.Component {
         );
         console.log('initRes: ', res);
         if (res && res.success) {
+          PassbaseModule.setTheme(true)
           this.setState({initSucceed: true, loading: false});
         }
 

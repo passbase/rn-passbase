@@ -36,9 +36,13 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-        // add following maven block
+        // add following maven blocks
         maven {
             url 'http://maven.facetec.com'
         }
+        maven {
+         url 'https://button.passbase.com/__android'
+        }
+
     }
 }
