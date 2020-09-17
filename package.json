@@ -1,6 +1,6 @@
 {
   "name": "@passbase/react-native-passbase",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "description": "Official React-Native wrapper for Passbase SDK.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
