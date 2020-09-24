@@ -21,7 +21,7 @@
     "build": "rm -rf dist && tsc -p ./src",
     "watch": "npm run build -- -w",
     "lint": "npm run lint:ts && npm run lint:kotlin && npm run lint:swift",
-    "lint:ts": "tslint --fix -p ./src && tslint --fix -p ./example/src",
+    "lint:ts": "tslint -p ./src",
     "lint:kotlin": "cd example/android && ./gradlew ktlintMainSourceSetFormat",
     "lint:swift": "cd ios && ../example/ios/Pods/SwiftLint/swiftlint autocorrect && ../example/ios/Pods/SwiftLint/swiftlint",
     "ci:build": "cd example && npm i",
@@ -30,9 +30,23 @@
     "ci:lint:kotlin": "cd example/android && ./gradlew ktlintMainSourceSetCheck",
     "ci:lint:swift": "cd ios && ../example/ios/Pods/SwiftLint/swiftlint",
     "ci:compile:android": "cd example/android && ./gradlew compileDebugSources",
-    "ci:compile:ios": "cd example/ios && export RCT_NO_LAUNCH_PACKAGER=\"true\" && export RCT_NO_BUNDLE=\"true\" && xcodebuild CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=\"NO\" CODE_SIGN_ENTITLEMENTS=\"\" CODE_SIGNING_ALLOWED=\"NO\" -workspace RnPassbaseExample.xcworkspace -configuration Debug -scheme RnPassbaseExample test",
+    "ci:compile:ios": "cd example/ios && export RCT_NO_LAUNCH_PACKAGER=\"true\" && export RCT_NO_BUNDLE=\"true\" && xcodebuild CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=\"NO\" CODE_SIGN_ENTITLEMENTS=\"\" CODE_SIGNING_ALLOWED=\"NO\" -workspace example.xcworkspace -configuration Debug -scheme example test -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.2'",
     "preversion": "npm run lint && npm run build",
     "postversion": "git push && git push --tags"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.tsx?": [
+      "npm run lint:ts",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --doubleQuote=true --write"
+    ]
   },
   "bugs": {
     "url": "https://github.com/passbase/rn-passbase/issues"
@@ -49,9 +63,12 @@
   },
   "devDependencies": {
     "@types/react-native": "0.60.8",
-    "tslint": "5.19.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "prettier": "^2.1.2",
     "tslint-config-standard": "8.0.1",
     "tslint-react": "4.0.0",
+    "tslint": "5.19.0",
     "typescript": "3.5.3"
   },
   "files": [

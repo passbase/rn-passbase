@@ -21,7 +21,7 @@ PODS:
   - glog (0.3.5)
   - lottie-ios (3.1.8)
   - Microblink (5.5.0)
-  - Passbase (1.9.3):
+  - Passbase (1.9.6):
     - lottie-ios
     - Microblink (= 5.5.0)
     - ZoomAuthentication (= 8.7.1)
@@ -189,7 +189,7 @@ PODS:
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
   - react-native-passbase (1.8.1):
-    - Passbase (= 1.9.3)
+    - Passbase (= 1.9.6)
     - React
   - React-RCTActionSheet (0.61.5):
     - React-Core/RCTActionSheetHeaders (= 0.61.5)
