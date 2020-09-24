@@ -52,13 +52,10 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
 
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
+        
         passbaseRef!!.onCancelPassbaseVerification {
           val onCancelPBVerifArgs = Arguments.createMap()
           sendEvent(reactApplicationContext, "onCancelPassbaseVerification", onCancelPBVerifArgs);
-
-          val onCancelPBArgs = Arguments.createMap()
-          // todo: remove this event in later builds, atm it is for back compatibility.
-          sendEvent(reactApplicationContext, "onCancelPassbase", onCancelPBArgs);
         }
 
         passbaseRef!!.onStartPassbaseVerification {
@@ -70,9 +67,6 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
           val params = Arguments.createMap();
           params.putString("authKey", authKey);
           sendEvent(reactApplicationContext, "onCompletePassbaseVerification", params);
-
-          // todo: remove this event in later builds, atm it is for back compatibility.
-          sendEvent(reactApplicationContext, "onCompletePassbase", params);
         }
       }
 
@@ -109,18 +103,25 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
 
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
+
         passbaseRef!!.onCancelPassbaseVerification {
           val map = Arguments.createMap()
-          sendEvent(reactApplicationContext, "onCancelPassbase", map);
+          sendEvent(reactApplicationContext, "onCancelPassbaseVerification", map);
+        }
+
+        passbaseRef!!.onStartPassbaseVerification {
+          val map = Arguments.createMap()
+          sendEvent(reactApplicationContext, "onStartPassbaseVerification", map);
         }
 
         passbaseRef!!.onCompletePassbaseVerification { authKey ->
           val params = Arguments.createMap();
           params.putString("authKey", authKey);
-          sendEvent(reactApplicationContext, "onCompletePassbase", params);
+          sendEvent(reactApplicationContext, "onCompletePassbaseVerification", params);
         }
 
       }
+
 
       val hasAdditionalAttributes = mapKeysCount(additionalAttribs) != 0
       val hasEmail = !email.isEmpty()
@@ -197,23 +198,6 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     }
   }
 
-  /*
-  * Method to enable/disable Dark theme mode.
-  * @Params isDark: Boolean
-  * if isDark True it enables dark theme else disable dark theme.
-  * */
-  @ReactMethod
-  fun setTheme (isDark: Boolean) {
-    try {
-      if (isDark) {
-        passbaseRef?.setTheme(Passbase.THEME_DARK_ON)
-      } else {
-        passbaseRef?.setTheme(Passbase.THEME_DARK_OFF)
-      }
-    } catch (e: Exception) {
-      Toast.makeText(reactApplicationContext, e?.localizedMessage, Toast.LENGTH_LONG).show()
-    }
-  }
 
   // method to send events to JS side.
   private fun sendEvent(reactContext: ReactContext,

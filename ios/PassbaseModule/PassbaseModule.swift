@@ -82,16 +82,10 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     func didCompletePassbaseVerification (authenticationKey: String) {
         super.sendEvent(withName: "onCompletePassbaseVerification", body: ["authKey": authenticationKey])
-
-        // todo: it is for back compatibility at the moment but will remove in futre releases.
-        super.sendEvent(withName: "onCompletePassbase", body: ["authKey": authenticationKey])
     }
 
     func didCancelPassbaseVerification () {
         super.sendEvent(withName: "onCancelPassbaseVerification", body: nil)
-
-        // todo: it is for back compatibility at the moment but will remove in futre releases.
-        super.sendEvent(withName: "onCancelPassbase", body: nil)
     }
 
     func didStartPassbaseVerification() {
