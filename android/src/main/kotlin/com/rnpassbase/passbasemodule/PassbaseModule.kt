@@ -52,7 +52,7 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
 
       if (passbaseRef == null && currentActivity != null) {
         passbaseRef = Passbase(currentActivity!!)
-        
+
         passbaseRef!!.onCancelPassbaseVerification {
           val onCancelPBVerifArgs = Arguments.createMap()
           sendEvent(reactApplicationContext, "onCancelPassbaseVerification", onCancelPBVerifArgs);

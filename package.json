@@ -57,17 +57,8 @@
   "files": [
     "android",
     "ios",
-    "src",
     "dist",
-    ".dockerignore",
-    ".editorconfig",
-    "tslint.json",
-    "*.md",
-    "*.podspec",
-    "LICENSE"
+    "*.podspec"
   ],
-  "dependencies": {},
-  "directories": {
-    "example": "example"
-  }
+  "dependencies": {}
 }
