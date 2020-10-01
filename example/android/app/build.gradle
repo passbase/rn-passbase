@@ -128,11 +128,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example"
+        applicationId "com.passbasereactnativedemo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 196
+        versionName "1.9.6"
     }
     splits {
         abi {

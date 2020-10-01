@@ -46,3 +46,6 @@ buck-out/
 
 .ionide/
 *.tgz
+
+*/private_key.pepk
+example/android/app/private_key.pepk

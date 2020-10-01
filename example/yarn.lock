@@ -862,8 +862,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@passbase/react-native-passbase@../":
-  version "1.8.1"
+"@passbase/react-native-passbase@^1.9.6":
+  version "1.9.6"
+  resolved "https://registry.yarnpkg.com/@passbase/react-native-passbase/-/react-native-passbase-1.9.6.tgz#291177deafea19e5a83c1d1506f974ec72fb848c"
+  integrity sha512-cR0dibG1o4DL0MAzS6tH1ADVRj7lIbC1He01zzBrXpjz0xx0ZzlKlqaqj/RjlCxmqlHvofUNGHXSWcWbfBli6Q==
 
 "@react-native-community/cli-debugger-ui@^3.0.0":
   version "3.0.0"
