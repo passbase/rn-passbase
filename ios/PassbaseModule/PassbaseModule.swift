@@ -73,12 +73,6 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
         }
     }
 
-    /*
-    * Method to enable/disable setTestMode
-    * */
-    @objc func setTestMode(_ enabled: Bool) {
-        // ios sdk yet don't have this method exposed.
-    }
 
     func didCompletePassbaseVerification (authenticationKey: String) {
         super.sendEvent(withName: "onCompletePassbaseVerification", body: ["authKey": authenticationKey])

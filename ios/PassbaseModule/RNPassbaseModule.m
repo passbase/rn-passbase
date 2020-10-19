@@ -41,6 +41,4 @@ RCT_EXTERN_METHOD(startVerification:(RCTPromiseResolveBlock)resolve reject:(RCTP
 
 RCT_EXTERN_METHOD(startVerificationWithCB:(RCTResponseSenderBlock)onSuccess onFailure:(RCTResponseSenderBlock)onFailure)
 
-RCT_EXTERN_METHOD(setTestMode: (BOOL)enabled)
-
 @end

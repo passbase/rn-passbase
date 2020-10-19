@@ -184,20 +184,6 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     }
   }
 
-  /*
-  * Method to enable/disable setTestMode
-  * */
-  @ReactMethod
-  fun setTestMode (enabled: Boolean) {
-    try {
-      if (passbaseRef != null) {
-        passbaseRef!!.setTestMode(enabled)
-      }
-    } catch (ex: Exception) {
-      Toast.makeText(reactApplicationContext, ex.message, Toast.LENGTH_LONG).show()
-    }
-  }
-
 
   // method to send events to JS side.
   private fun sendEvent(reactContext: ReactContext,
