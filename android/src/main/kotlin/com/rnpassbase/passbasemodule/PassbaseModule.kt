@@ -129,14 +129,21 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     }
   }
 
-  @ReactMethod
-  fun setPrefilledEmail(email: String) {
-    passbaseRef!!.prefillUserEmail = email;
-  }
 
   @ReactMethod
-  fun getPrefilledEmail() {
-    return passbaseRef!!.prefillUserEmail;
+  fun setPrefillUserEmail (email: String, promise: Promise) {
+    try {
+      if (passbaseRef == null) {
+        throw Exception(INITIALZE_PASSBASE_TO_START_VERIFICATION)
+      }
+
+      passbaseRef!!.prefillUserEmail = email;
+      val map = Arguments.createMap()
+      map.putBoolean(SUCCESS, true)
+      promise.resolve(map)
+    } catch (e: Exception) {
+      promise.reject(ERROR_START_VERIFICATION, e)
+    }
   }
 
   // promise based implementation of startVerification method.
