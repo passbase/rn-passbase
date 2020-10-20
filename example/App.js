@@ -21,15 +21,15 @@ class App extends React.Component {
   }
   async componentDidMount() {
     this.subscription = new NativeEventEmitter(PassbaseModule);
-    this.subscription.addListener('onCancelPassbaseVerification', event => {
-      console.log('##onCancelPassbaseVerification##', event);
+    this.subscription.addListener('onError', event => {
+      console.log('##onError##', event);
     });
-    this.subscription.addListener('onCompletePassbaseVerification', event => {
-      console.log('##onCompletePassbaseVerification##', event);
+    this.subscription.addListener('onFinish', event => {
+      console.log('##onFinish##', event);
     });
 
-    this.subscription.addListener('onStartPassbaseVerification', event => {
-      console.log('##onStartPassbaseVerification##', event);
+    this.subscription.addListener('onStart', event => {
+      console.log('##onStart##', event);
     });
   }
 
@@ -58,11 +58,9 @@ class App extends React.Component {
         // })
       } else {
         // promise based implementation
-        const res = await PassbaseModule.init(
-          'YOUR_PUBLISHABLE_API_KEY',
-          '', // EMAIL HERE OR EMPTY STRING.
-          {},
-        );
+        const res = await PassbaseModule.init('098336c09ed3a14acf40f78d9afa29162df2d177daaa65f7c6ed7fda1d6eef9e'); //project 7
+        console.log(await PassbaseModule.setPrefillUserEmail("test@mail.com"));
+        console.log(await PassbaseModule.getPrefillUserEmail());
         console.log('initRes: ', res);
         if (res && res.success) {
           this.setState({initSucceed: true, loading: false});
@@ -122,12 +120,15 @@ class App extends React.Component {
 
   componentWillUnmount() {
     if (this.subscription) {
-      this.subscription.removeListener('onCompletePassbase', event => {
-        console.log('##removing listener didCompletePassbaseVerification##', event);
+      this.subscription.removeListener('onStart', event => {
+        console.log('##removing listener onStart##', event);
       });
     }
-    this.subscription.removeListener('onCancelPassbase', event => {
-      console.log('##removing listener didCancelPassbaseVerification##', event);
+    this.subscription.removeListener('onFinish', event => {
+      console.log('##removing listener onFinish##', event);
+    });
+    this.subscription.removeListener('onError', event => {
+      console.log('##removing listener onError##', event);
     });
   }
 }

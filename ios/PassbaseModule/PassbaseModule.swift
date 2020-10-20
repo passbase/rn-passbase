@@ -7,15 +7,12 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
         print(message);
       }
 
-    @objc func initialize(_ apiKey: String, email: String, additionalParams: NSDictionary, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+    @objc func initialize(_ publishableApiKey: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         do {
             if (!apiKey.isEmpty) {
-                Passbase.source = 2
-
-                Passbase.initialize(publishableApiKey: apiKey)
-                Passbase.delegate = self
-                Passbase.additionalAttributes = additionalParams as! [String : String]
-                Passbase.prefillUserEmail = email
+                PassbaseSDK.source = 2
+                PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+                PassbaseSDK.delegate = self
                 var response = [String:Bool]()
                 response["success"] = true
                 resolve(response)
@@ -29,15 +26,12 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
         }
     }
 
-    @objc func initWithCB(_ apiKey: String, email: String, additionalParams: NSDictionary, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
+    @objc func initWithCB(_ publishableApiKey: String, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
         do {
             if (!apiKey.isEmpty) {
-                Passbase.source = 2
-
-                Passbase.initialize(publishableApiKey: apiKey)
-                Passbase.delegate = self
-                Passbase.additionalAttributes = additionalParams as! [String : String]
-                Passbase.prefillUserEmail = email
+                PassbaseSDK.source = 2
+                PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+                PassbaseSDK.delegate = self
                 var response = [String:Bool]()
                 response["success"] = true
                 onSuccess([response])
@@ -57,7 +51,7 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     @objc func startVerification(_ resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         do {
-                try Passbase.startVerification(from: RCTPresentedViewController()!)
+            try PassbaseSDK.startVerification(from: RCTPresentedViewController()!)
             resolve(["success": true])
         } catch {
             reject("error_starting_verification", "error_starting_verification", NSError())
@@ -66,7 +60,7 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     @objc func startVerificationWithCB(_ onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
         do {
-                try Passbase.startVerification(from: RCTPresentedViewController()!)
+            try PassbaseSDK.startVerification(from: RCTPresentedViewController()!)
             onSuccess([["success": true]])
         } catch {
             onFailure([["error_starting_verification":"error_starting_verification"]])
@@ -74,15 +68,15 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
     }
 
 
-    func didCompletePassbaseVerification (authenticationKey: String) {
-        super.sendEvent(withName: "onCompletePassbaseVerification", body: ["authKey": authenticationKey])
+    func onFinish (identityAccessKey: String) {
+        super.sendEvent(withName: "onFinish", body: ["identityAccessKey": identityAccessKey])
     }
 
-    func didCancelPassbaseVerification () {
-        super.sendEvent(withName: "onCancelPassbaseVerification", body: nil)
+    func onError (errorCode: String) {
+        super.sendEvent(withName: "onError", body: ["errorCode": errorCode])
     }
 
-    func didStartPassbaseVerification() {
-        super.sendEvent(withName: "onStartPassbaseVerification", body: nil)
+    func onStart() {
+        super.sendEvent(withName: "onStart", body: nil)
     }
 }

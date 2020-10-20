@@ -1,33 +1,20 @@
 import { NativeModules } from 'react-native'
 const { RNPassbaseModule } = NativeModules
 
-const init = async (apiKey: string, email: string, additionalAttribs: object, onSuccess: Function, onFailure: Function) => {
+const init = async (publishableApiKey: string, onSuccess: Function, onFailure: Function) => {
   const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
     (onFailure && typeof onFailure === 'function')
 
   try {
 
-    if (!apiKey) {
+    if (!publishableApiKey) {
       throw new Error(RNPassbaseModule.REQUIRED_OPTION_API_KEY_MISSING)
     }
 
-    // this check is here because SDKs Kotlin side accepts only Array<Pair<String, String>>
-    if (additionalAttribs && Object.keys(additionalAttribs).length) {
-      const keys = Object.keys(additionalAttribs)
-      for (const key of keys) {
-        // @ts-ignore
-        let item = additionalAttribs[key]
-        if (typeof item !== 'string') {
-          throw new Error('additional attributes should have only string type values.')
-        }
-      }
-    }
-
     if (isCallbackBased) {
-      return RNPassbaseModule.initWithCB(apiKey, email, additionalAttribs, onSuccess, onFailure)
-
+      return RNPassbaseModule.initWithCB(publishableApiKey, onSuccess, onFailure)
     } else {
-      return RNPassbaseModule.initialize(apiKey, email, additionalAttribs)
+      return RNPassbaseModule.initialize(publishableApiKey)
     }
 
   } catch (ex) {
@@ -40,6 +27,9 @@ const init = async (apiKey: string, email: string, additionalAttribs: object, on
     }
   }
 }
+
+const setPrefillUserEmail = (email: string) => RNPassbaseModule.setPrefillUserEmail(email);
+const getPrefillUserEmail = (email: string) => RNPassbaseModule.getPrefilledEmail(email);
 
 const startVerification = async (onSuccess: Function, onFailure: Function) => {
   // todo: make sure to chekc internet connection as verificaiton doesn't start without internet.
@@ -58,6 +48,8 @@ export const NativeModule = {
   init,
   startVerification,
   show,
+  setPrefillUserEmail,
+  getPrefillUserEmail,
   constants: {
     ERROR_INITIALIZING_PASSBASE: RNPassbaseModule.ERROR_INITIALIZING_PASSBASE,
     INITIALZE_PASSBASE_TO_START_VERIFICATION: RNPassbaseModule.INITIALZE_PASSBASE_TO_START_VERIFICATION,

@@ -5,7 +5,8 @@ import androidx.annotation.Nullable
 import com.facebook.react.bridge.*
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
-import com.passbase.passbase_sdk.Passbase
+import com.passbase.passbase_sdk.PassbaseSDK
+import com.passbase.passbase_sdk.PassbaseSDKListener
 import com.rnpassbase.Utils.convertMapToPairArr
 import com.rnpassbase.Utils.mapKeysCount
 
@@ -24,7 +25,7 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
     const val ERROR = "error"
 
     //reference to passbase instance.
-    var passbaseRef: Passbase? = null
+    var passbaseRef: PassbaseSDK? = null
   }
   // return name of the module to be used in JS side.
   override fun getName(): String {
@@ -46,43 +47,33 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
 
   // Promise based implementation of init method
   @ReactMethod
-  fun initialize (apiKey: String, email: String, additionalAttribs: ReadableMap, promise: Promise) {
+  fun initialize (publishableApiKey: String, promise: Promise) {
     try {
-      Passbase.source = 2
+      PassbaseSDK.source = 2
 
       if (passbaseRef == null && currentActivity != null) {
-        passbaseRef = Passbase(currentActivity!!)
-        
-        passbaseRef!!.onCancelPassbaseVerification {
-          val onCancelPBVerifArgs = Arguments.createMap()
-          sendEvent(reactApplicationContext, "onCancelPassbaseVerification", onCancelPBVerifArgs);
-        }
-
-        passbaseRef!!.onStartPassbaseVerification {
-          val map = Arguments.createMap()
-          sendEvent(reactApplicationContext, "onStartPassbaseVerification", map);
-        }
-
-        passbaseRef!!.onCompletePassbaseVerification { authKey ->
-          val params = Arguments.createMap();
-          params.putString("authKey", authKey);
-          sendEvent(reactApplicationContext, "onCompletePassbaseVerification", params);
-        }
+        passbaseRef = PassbaseSDK(currentActivity!!)
+        passbaseRef!!.callback(object : PassbaseSDKListener {
+              override fun onStart() {
+                val map = Arguments.createMap()
+                sendEvent(reactApplicationContext, "onStart", map);
+              }
+    
+              override fun onFinish(identityAccessKey: String?) {
+                val params = Arguments.createMap();
+                params.putString("identityAccessKey", identityAccessKey);
+                sendEvent(reactApplicationContext, "onFinish", params);
+              }
+    
+              override fun onError(errorCode: String) {
+                val params = Arguments.createMap();
+                params.putString("errorCode", errorCode);
+                sendEvent(reactApplicationContext, "onError", params);
+              }
+        })
       }
 
-      val hasAdditionalAttributes = mapKeysCount(additionalAttribs) != 0
-      val hasEmail = !email.isEmpty()
-      if (!hasAdditionalAttributes && hasEmail) {
-        passbaseRef!!.initialize(apiKey, email)
-
-      } else if (!hasAdditionalAttributes && !hasEmail)  {
-        passbaseRef!!.initialize(apiKey)
-
-      } else if (hasAdditionalAttributes && hasEmail) {
-        val additionAttribArr = convertMapToPairArr(additionalAttribs)
-        passbaseRef!!.initialize(apiKey, email, additionAttribArr)
-
-      }
+      passbaseRef!!.initialize(publishableApiKey)
 
       val map = Arguments.createMap()
       map.putBoolean(SUCCESS, true)
@@ -97,44 +88,35 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
   // due to some unknown reasons. so to avoid I've changed name of this & in JS I kept single name & called
   // native methods conditionally. can check `src/PassbaseModule/native-modules.ts`
   @ReactMethod
-  fun initWithCB (apiKey: String, email: String, additionalAttribs: ReadableMap, onSuccess: Callback, onFailure: Callback) {
+  fun initWithCB (publishableApiKey: String, onSuccess: Callback, onFailure: Callback) {
     try {
-      Passbase.source = 2
+      PassbaseSDK.source = 2
 
       if (passbaseRef == null && currentActivity != null) {
-        passbaseRef = Passbase(currentActivity!!)
-
-        passbaseRef!!.onCancelPassbaseVerification {
-          val map = Arguments.createMap()
-          sendEvent(reactApplicationContext, "onCancelPassbaseVerification", map);
-        }
-
-        passbaseRef!!.onStartPassbaseVerification {
-          val map = Arguments.createMap()
-          sendEvent(reactApplicationContext, "onStartPassbaseVerification", map);
-        }
-
-        passbaseRef!!.onCompletePassbaseVerification { authKey ->
-          val params = Arguments.createMap();
-          params.putString("authKey", authKey);
-          sendEvent(reactApplicationContext, "onCompletePassbaseVerification", params);
-        }
+        passbaseRef = PassbaseSDK(currentActivity!!)
+        passbaseRef!!.callback(object : PassbaseSDKListener {
+              override fun onStart() {
+                val map = Arguments.createMap()
+                sendEvent(reactApplicationContext, "onStart", map);
+              }
+    
+              override fun onFinish(identityAccessKey: String?) {
+                val params = Arguments.createMap();
+                params.putString("identityAccessKey", identityAccessKey);
+                sendEvent(reactApplicationContext, "onFinish", params);
+              }
+    
+              override fun onError(errorCode: String) {
+                val params = Arguments.createMap();
+                params.putString("errorCode", errorCode);
+                sendEvent(reactApplicationContext, "onError", params);
+              }
+        })
 
       }
 
 
-      val hasAdditionalAttributes = mapKeysCount(additionalAttribs) != 0
-      val hasEmail = !email.isEmpty()
-      if (!hasAdditionalAttributes && !hasEmail)  {
-        passbaseRef!!.initialize(apiKey)
-
-      } else if (!hasAdditionalAttributes && hasEmail) {
-        passbaseRef!!.initialize(apiKey, email)
-
-      } else if (hasAdditionalAttributes && hasEmail) {
-        val additionAttribArr = convertMapToPairArr(additionalAttribs)
-        passbaseRef!!.initialize(apiKey, email, additionAttribArr)
-      }
+      passbaseRef!!.initialize(publishableApiKey)
 
       val map = Arguments.createMap()
       map.putBoolean(SUCCESS, true)
@@ -145,6 +127,16 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
       map.putString("message", e.message)
       onFailure.invoke(map)
     }
+  }
+
+  @ReactMethod
+  fun setPrefilledEmail(email: String) {
+    passbaseRef!!.prefillUserEmail = email;
+  }
+
+  @ReactMethod
+  fun getPrefilledEmail() {
+    return passbaseRef!!.prefillUserEmail;
   }
 
   // promise based implementation of startVerification method.
