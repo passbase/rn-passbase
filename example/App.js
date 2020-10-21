@@ -58,21 +58,17 @@ class App extends React.Component {
         // })
       } else {
         // promise based implementation
-        const res = await PassbaseSDK.init('098336c09ed3a14acf40f78d9afa29162df2d177daaa65f7c6ed7fda1d6eef9e'); //project 7
-        //PassbaseSDK.prefillUserEmail = "test@test.com"
-        //PassbaseSDK.setPrefillUserEmail("test@test.com");
+        const res = await PassbaseSDK.initialize('YOUR_PUBLISHABLE_API_KEY');
+        //PassbaseSDK.setPrefillUserEmail("your@mail.com");
 
-        //console.log(await PassbaseSDK.setPrefillUserEmail("test@mail.com"));
         console.log('initRes: ', res);
         if (res && res.success) {
           this.setState({initSucceed: true, loading: false});
         }
 
         //Callback based implementation
-        // PassbaseSDK.init(
+        // PassbaseSDK.initialize(
         //     'YOUR_PUBLISHABLE_API_KEY',
-        //     '', // EMAIL HERE OR EMPTY STRING.
-        //     {},
         //     (res) => {
         //         console.log('***onSuccess:*** ', res)
         //         if (res.success) {

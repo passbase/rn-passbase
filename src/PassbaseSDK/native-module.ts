@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native'
 const { RNPassbaseSDK } = NativeModules
 
-const init = async (publishableApiKey: string, onSuccess: Function, onFailure: Function) => {
+const initialize = async (publishableApiKey: string, onSuccess: Function, onFailure: Function) => {
   const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
     (onFailure && typeof onFailure === 'function')
 
@@ -44,7 +44,7 @@ const show = (message: string) =>  RNPassbaseSDK.show(message);
 
 export const NativeModule = {
   ...RNPassbaseSDK,
-  init,
+  initialize,
   startVerification,
   show,
   setPrefillUserEmail,

@@ -10,7 +10,7 @@ import com.passbase.passbase_sdk.PassbaseSDKListener
 import com.rnpassbase.Utils.convertMapToPairArr
 import com.rnpassbase.Utils.mapKeysCount
 
-@ReactModule(name = PassbaseSDK.reactClass)
+@ReactModule(name = com.rnpassbase.passbasemodule.PassbaseSDK.reactClass)
 class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule(context) {
   companion object {
     const val reactClass = "RNPassbaseSDK"

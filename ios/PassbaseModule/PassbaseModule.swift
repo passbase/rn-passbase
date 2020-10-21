@@ -2,7 +2,7 @@ import Foundation
 import Passbase
 
 @objc (RNPassbaseSDK)
-class PassbaseSDK: RCTEventEmitter, PassbaseDelegate {
+class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
     @objc func show(_ message: String) {
         print(message);
     }
@@ -12,44 +12,32 @@ class PassbaseSDK: RCTEventEmitter, PassbaseDelegate {
     }
 
     @objc func initialize(_ publishableApiKey: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
-        do {
-            if (!publishableApiKey.isEmpty) {
-                PassbaseSDK.source = 2
-                PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
-                PassbaseSDK.delegate = self
-                var response = [String:Bool]()
-                response["success"] = true
-                resolve(response)
-            } else {
-                let error: NSError = NSError()
-                reject("error_initializing_passbase_sdk", "required_option_api_key_is_missing", error)
-            }
-        } catch {
+        if (!publishableApiKey.isEmpty) {
+            PassbaseSDK.source = 2
+            PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+            PassbaseSDK.delegate = self
+            var response = [String:Bool]()
+            response["success"] = true
+            resolve(response)
+        } else {
             let error: NSError = NSError()
-            reject("error_initializing_passbase_sdk", "error_initializing_passbase_sdk", error)
+            reject("error_initializing_passbase_sdk", "required_option_api_key_is_missing", error)
         }
     }
 
     @objc func initWithCB(_ publishableApiKey: String, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
-        do {
-            if (!publishableApiKey.isEmpty) {
-                PassbaseSDK.source = 2
-                PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
-                PassbaseSDK.delegate = self
-                var response = [String:Bool]()
-                response["success"] = true
-                onSuccess([response])
-            } else {
-                onFailure([[
-                    "error_initializing_passbase_sdk":"error_initializing_passbase_sdk",
-                    "message": "required_option_api_key_is_missing"
-                ]])
-            }
-        } catch {
-                onFailure([[
-                    "error_initializing_passbase_sdk":"error_initializing_passbase_sdk",
-                    "message": "error_initializing_passbase_sdk"
-                ]])
+        if (!publishableApiKey.isEmpty) {
+            PassbaseSDK.source = 2
+            PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+            PassbaseSDK.delegate = self
+            var response = [String:Bool]()
+            response["success"] = true
+            onSuccess([response])
+        } else {
+            onFailure([[
+                "error_initializing_passbase_sdk":"error_initializing_passbase_sdk",
+                "message": "required_option_api_key_is_missing"
+            ]])
         }
     }
 

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { NativeModules } from 'react-native';
 const { RNPassbaseSDK } = NativeModules;
-const init = (publishableApiKey, onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
+const initialize = (publishableApiKey, onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
         (onFailure && typeof onFailure === 'function');
     try {
@@ -42,7 +42,7 @@ const startVerification = (onSuccess, onFailure) => __awaiter(this, void 0, void
     return RNPassbaseSDK.startVerification();
 });
 const show = (message) => RNPassbaseSDK.show(message);
-export const NativeModule = Object.assign({}, RNPassbaseSDK, { init,
+export const NativeModule = Object.assign({}, RNPassbaseSDK, { initialize,
     startVerification,
     show,
     setPrefillUserEmail, constants: {
