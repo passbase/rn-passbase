@@ -1,6 +1,6 @@
 #import <React/RCTBridgeModule.h>
 
-@interface RCT_EXTERN_MODULE(RNPassbaseModule, NSObject)
+@interface RCT_EXTERN_MODULE(RNPassbaseSDK, NSObject)
 
 + (BOOL)requiresMainQueueSetup
 {

@@ -10,10 +10,10 @@ import com.passbase.passbase_sdk.PassbaseSDKListener
 import com.rnpassbase.Utils.convertMapToPairArr
 import com.rnpassbase.Utils.mapKeysCount
 
-@ReactModule(name = PassbaseModule.reactClass)
-class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaModule(context) {
+@ReactModule(name = PassbaseSDK.reactClass)
+class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule(context) {
   companion object {
-    const val reactClass = "RNPassbaseModule"
+    const val reactClass = "RNPassbaseSDK"
 
     // constants to provide meaningful hints & are also exposed to JS.
     const val ERROR_INITIALIZING_PASSBASE = "error_initializing_passbase_sdk"
@@ -86,7 +86,7 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
   // callback based implementation of init method.
   // here had to change name because unfortunately method overload wasn't working
   // due to some unknown reasons. so to avoid I've changed name of this & in JS I kept single name & called
-  // native methods conditionally. can check `src/PassbaseModule/native-modules.ts`
+  // native methods conditionally. can check `src/PassbaseSDK/native-modules.ts`
   @ReactMethod
   fun initWithCB (publishableApiKey: String, onSuccess: Callback, onFailure: Callback) {
     try {
@@ -166,7 +166,7 @@ class PassbaseModule(context: ReactApplicationContext) : ReactContextBaseJavaMod
   // callback based implementation of startVerification method.
   // here had to change name because unfortunately method overload wasn't working
   // due to some unknown reasons. so to avoid I've changed name of this & in JS I kept single name & called
-  // native methods conditionally. can check `src/PassbaseModule/native-modules.ts`
+  // native methods conditionally. can check `src/PassbaseSDK/native-modules.ts`
   @ReactMethod
   fun startVerificationWithCB (onSuccess: Callback, onFailure: Callback) {
     try {

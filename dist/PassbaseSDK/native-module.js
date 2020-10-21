@@ -7,19 +7,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { NativeModules } from 'react-native';
-const { RNPassbaseModule } = NativeModules;
+const { RNPassbaseSDK } = NativeModules;
 const init = (publishableApiKey, onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
         (onFailure && typeof onFailure === 'function');
     try {
         if (!publishableApiKey) {
-            throw new Error(RNPassbaseModule.REQUIRED_OPTION_API_KEY_MISSING);
+            throw new Error(RNPassbaseSDK.REQUIRED_OPTION_API_KEY_MISSING);
         }
         if (isCallbackBased) {
-            return RNPassbaseModule.initWithCB(publishableApiKey, onSuccess, onFailure);
+            return RNPassbaseSDK.initWithCB(publishableApiKey, onSuccess, onFailure);
         }
         else {
-            return RNPassbaseModule.initialize(publishableApiKey);
+            return RNPassbaseSDK.initialize(publishableApiKey);
         }
     }
     catch (ex) {
@@ -31,27 +31,27 @@ const init = (publishableApiKey, onSuccess, onFailure) => __awaiter(this, void 0
         }
     }
 });
-const setPrefillUserEmail = (email) => RNPassbaseModule.setPrefillUserEmail(email);
+const setPrefillUserEmail = (email) => RNPassbaseSDK.setPrefillUserEmail(email);
 const startVerification = (onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
     // todo: make sure to chekc internet connection as verificaiton doesn't start without internet.
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
         (onFailure && typeof onFailure === 'function');
     if (isCallbackBased) {
-        return RNPassbaseModule.startVerificationWithCB(onSuccess, onFailure);
+        return RNPassbaseSDK.startVerificationWithCB(onSuccess, onFailure);
     }
-    return RNPassbaseModule.startVerification();
+    return RNPassbaseSDK.startVerification();
 });
-const show = (message) => RNPassbaseModule.show(message);
-export const NativeModule = Object.assign({}, RNPassbaseModule, { init,
+const show = (message) => RNPassbaseSDK.show(message);
+export const NativeModule = Object.assign({}, RNPassbaseSDK, { init,
     startVerification,
     show,
     setPrefillUserEmail, constants: {
-        ERROR_INITIALIZING_PASSBASE: RNPassbaseModule.ERROR_INITIALIZING_PASSBASE,
-        INITIALZE_PASSBASE_TO_START_VERIFICATION: RNPassbaseModule.INITIALZE_PASSBASE_TO_START_VERIFICATION,
-        ERROR_START_VERIFICATION: RNPassbaseModule.ERROR_START_VERIFICATION,
-        VERIFICATION_CANCELLED: RNPassbaseModule.VERIFICATION_CANCELLED,
-        REQUIRED_OPTION_API_KEY_MISSING: RNPassbaseModule.REQUIRED_OPTION_API_KEY_MISSING,
-        SUCCESS: RNPassbaseModule.SUCCESS,
-        ERROR: RNPassbaseModule.ERROR
+        ERROR_INITIALIZING_PASSBASE: RNPassbaseSDK.ERROR_INITIALIZING_PASSBASE,
+        INITIALZE_PASSBASE_TO_START_VERIFICATION: RNPassbaseSDK.INITIALZE_PASSBASE_TO_START_VERIFICATION,
+        ERROR_START_VERIFICATION: RNPassbaseSDK.ERROR_START_VERIFICATION,
+        VERIFICATION_CANCELLED: RNPassbaseSDK.VERIFICATION_CANCELLED,
+        REQUIRED_OPTION_API_KEY_MISSING: RNPassbaseSDK.REQUIRED_OPTION_API_KEY_MISSING,
+        SUCCESS: RNPassbaseSDK.SUCCESS,
+        ERROR: RNPassbaseSDK.ERROR
     } });
 //# sourceMappingURL=native-module.js.map

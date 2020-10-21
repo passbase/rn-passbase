@@ -1,8 +1,8 @@
 import Foundation
 import Passbase
 
-@objc (RNPassbaseModule)
-class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
+@objc (RNPassbaseSDK)
+class PassbaseSDK: RCTEventEmitter, PassbaseDelegate {
     @objc func show(_ message: String) {
         print(message);
     }

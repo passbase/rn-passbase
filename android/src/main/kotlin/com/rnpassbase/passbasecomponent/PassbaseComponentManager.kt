@@ -7,7 +7,7 @@ import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
 import com.passbase.passbase_sdk.PassbaseButton
-import com.rnpassbase.passbasemodule.PassbaseModule
+import com.rnpassbase.passbasemodule.PassbaseSDK
 
 @ReactModule(name = PassbaseComponentManager.reactClass)
 class PassbaseComponentManager : SimpleViewManager<PassbaseButton>() {
@@ -25,8 +25,8 @@ class PassbaseComponentManager : SimpleViewManager<PassbaseButton>() {
 
     passbaseButton.setOnClickListener {
       try {
-        if (PassbaseModule.passbaseRef !== null) {
-          PassbaseModule.passbaseRef!!.startVerification()
+        if (PassbaseSDK.passbaseRef !== null) {
+          PassbaseSDK.passbaseRef!!.startVerification()
         } else {
           Toast.makeText(reactContext, "Passbase Module must be initialized before trying to start verification", Toast.LENGTH_LONG).show()
           print("Passbase Module must be initialized before trying to start verification")

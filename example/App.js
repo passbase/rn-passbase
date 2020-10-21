@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
-import {PassbaseModule, PassbaseButton} from '@passbase/react-native-passbase';
+import {PassbaseSDK, PassbaseButton} from '@passbase/react-native-passbase';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ class App extends React.Component {
     };
   }
   async componentDidMount() {
-    this.subscription = new NativeEventEmitter(PassbaseModule);
+    this.subscription = new NativeEventEmitter(PassbaseSDK);
     this.subscription.addListener('onError', event => {
       console.log('##onError##', event);
     });
@@ -41,14 +41,14 @@ class App extends React.Component {
     this.setState({loading: true}, async () => {
       if (initSucceed) {
         // Promise based method call
-        const res = await PassbaseModule.startVerification();
+        const res = await PassbaseSDK.startVerification();
         this.setState({loading: false});
         if (!res.success) {
           alert('something went wrong. while starting verification.');
         }
 
         //Callback based call
-        // PassbaseModule.startVerification((res) => {
+        // PassbaseSDK.startVerification((res) => {
         //     if (res && res.success) {
         //         this.setState({loading: false})
         //     }
@@ -58,18 +58,18 @@ class App extends React.Component {
         // })
       } else {
         // promise based implementation
-        const res = await PassbaseModule.init('098336c09ed3a14acf40f78d9afa29162df2d177daaa65f7c6ed7fda1d6eef9e'); //project 7
-        //PassbaseModule.prefillUserEmail = "test@test.com"
-        PassbaseModule.setPrefillUserEmail("test@test.com");
+        const res = await PassbaseSDK.init('098336c09ed3a14acf40f78d9afa29162df2d177daaa65f7c6ed7fda1d6eef9e'); //project 7
+        //PassbaseSDK.prefillUserEmail = "test@test.com"
+        //PassbaseSDK.setPrefillUserEmail("test@test.com");
 
-        //console.log(await PassbaseModule.setPrefillUserEmail("test@mail.com"));
+        //console.log(await PassbaseSDK.setPrefillUserEmail("test@mail.com"));
         console.log('initRes: ', res);
         if (res && res.success) {
           this.setState({initSucceed: true, loading: false});
         }
 
         //Callback based implementation
-        // PassbaseModule.init(
+        // PassbaseSDK.init(
         //     'YOUR_PUBLISHABLE_API_KEY',
         //     '', // EMAIL HERE OR EMPTY STRING.
         //     {},
