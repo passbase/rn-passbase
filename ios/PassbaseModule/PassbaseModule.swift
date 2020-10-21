@@ -3,13 +3,17 @@ import Passbase
 
 @objc (RNPassbaseModule)
 class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
-      @objc func show(_ message: String) {
+    @objc func show(_ message: String) {
         print(message);
-      }
+    }
+
+    @objc func setPrefillUserEmail(_ email: String) {
+        PassbaseSDK.prefillUserEmail = email;
+    }
 
     @objc func initialize(_ publishableApiKey: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         do {
-            if (!apiKey.isEmpty) {
+            if (!publishableApiKey.isEmpty) {
                 PassbaseSDK.source = 2
                 PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
                 PassbaseSDK.delegate = self
@@ -28,7 +32,7 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     @objc func initWithCB(_ publishableApiKey: String, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
         do {
-            if (!apiKey.isEmpty) {
+            if (!publishableApiKey.isEmpty) {
                 PassbaseSDK.source = 2
                 PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
                 PassbaseSDK.delegate = self

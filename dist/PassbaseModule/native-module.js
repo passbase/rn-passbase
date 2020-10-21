@@ -31,12 +31,7 @@ const init = (publishableApiKey, onSuccess, onFailure) => __awaiter(this, void 0
         }
     }
 });
-
-
-
-const setPrefillUserEmail = (email: string) => RNPassbaseModule.setPrefillUserEmail(email);
-
-
+const setPrefillUserEmail = (email) => RNPassbaseModule.setPrefillUserEmail(email);
 const startVerification = (onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
     // todo: make sure to chekc internet connection as verificaiton doesn't start without internet.
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
@@ -47,12 +42,10 @@ const startVerification = (onSuccess, onFailure) => __awaiter(this, void 0, void
     return RNPassbaseModule.startVerification();
 });
 const show = (message) => RNPassbaseModule.show(message);
-export const NativeModule = Object.assign({}, RNPassbaseModule, { 
-    init,
+export const NativeModule = Object.assign({}, RNPassbaseModule, { init,
     startVerification,
     show,
-    setPrefillUserEmail,
-    constants: {
+    setPrefillUserEmail, constants: {
         ERROR_INITIALIZING_PASSBASE: RNPassbaseModule.ERROR_INITIALIZING_PASSBASE,
         INITIALZE_PASSBASE_TO_START_VERIFICATION: RNPassbaseModule.INITIALZE_PASSBASE_TO_START_VERIFICATION,
         ERROR_START_VERIFICATION: RNPassbaseModule.ERROR_START_VERIFICATION,

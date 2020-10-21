@@ -33,6 +33,8 @@
 
 RCT_EXTERN_METHOD(show:(NSString *)message)
 
+RCT_EXTERN_METHOD(setPrefillUserEmail:(NSString *)email)
+
 RCT_EXTERN_METHOD(initialize:(NSString *)publishableApiKey resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(initWithCB:(NSString *)publishableApiKey onSuccess:(RCTResponseSenderBlock)onSuccess onFailure:(RCTResponseSenderBlock)onFailure)

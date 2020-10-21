@@ -28,8 +28,6 @@ const init = async (publishableApiKey: string, onSuccess: Function, onFailure: F
   }
 }
 
-
-
 const setPrefillUserEmail = (email: string) => RNPassbaseModule.setPrefillUserEmail(email);
 
 const startVerification = async (onSuccess: Function, onFailure: Function) => {
