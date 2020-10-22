@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
-import {PassbaseModule, PassbaseButton} from '@passbase/react-native-passbase';
+import {PassbaseSDK, PassbaseButton} from '@passbase/react-native-passbase';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -20,16 +20,16 @@ class App extends React.Component {
     };
   }
   async componentDidMount() {
-    this.subscription = new NativeEventEmitter(PassbaseModule);
-    this.subscription.addListener('onCancelPassbaseVerification', event => {
-      console.log('##onCancelPassbaseVerification##', event);
+    this.subscription = new NativeEventEmitter(PassbaseSDK);
+    this.subscription.addListener('onError', event => {
+      console.log('##onError##', event);
     });
-    this.subscription.addListener('onCompletePassbaseVerification', event => {
-      console.log('##onCompletePassbaseVerification##', event);
+    this.subscription.addListener('onFinish', event => {
+      console.log('##onFinish##', event);
     });
 
-    this.subscription.addListener('onStartPassbaseVerification', event => {
-      console.log('##onStartPassbaseVerification##', event);
+    this.subscription.addListener('onStart', event => {
+      console.log('##onStart##', event);
     });
   }
 
@@ -41,14 +41,14 @@ class App extends React.Component {
     this.setState({loading: true}, async () => {
       if (initSucceed) {
         // Promise based method call
-        const res = await PassbaseModule.startVerification();
+        const res = await PassbaseSDK.startVerification();
         this.setState({loading: false});
         if (!res.success) {
           alert('something went wrong. while starting verification.');
         }
 
         //Callback based call
-        // PassbaseModule.startVerification((res) => {
+        // PassbaseSDK.startVerification((res) => {
         //     if (res && res.success) {
         //         this.setState({loading: false})
         //     }
@@ -58,21 +58,17 @@ class App extends React.Component {
         // })
       } else {
         // promise based implementation
-        const res = await PassbaseModule.init(
-          'YOUR_PUBLISHABLE_API_KEY',
-          '', // EMAIL HERE OR EMPTY STRING.
-          {},
-        );
+        const res = await PassbaseSDK.initialize('YOUR_PUBLISHABLE_API_KEY');
+        //PassbaseSDK.setPrefillUserEmail("your@mail.com");
+
         console.log('initRes: ', res);
         if (res && res.success) {
           this.setState({initSucceed: true, loading: false});
         }
 
         //Callback based implementation
-        // PassbaseModule.init(
+        // PassbaseSDK.initialize(
         //     'YOUR_PUBLISHABLE_API_KEY',
-        //     '', // EMAIL HERE OR EMPTY STRING.
-        //     {},
         //     (res) => {
         //         console.log('***onSuccess:*** ', res)
         //         if (res.success) {
@@ -122,12 +118,15 @@ class App extends React.Component {
 
   componentWillUnmount() {
     if (this.subscription) {
-      this.subscription.removeListener('onCompletePassbase', event => {
-        console.log('##removing listener didCompletePassbaseVerification##', event);
+      this.subscription.removeListener('onStart', event => {
+        console.log('##removing listener onStart##', event);
       });
     }
-    this.subscription.removeListener('onCancelPassbase', event => {
-      console.log('##removing listener didCancelPassbaseVerification##', event);
+    this.subscription.removeListener('onFinish', event => {
+      console.log('##removing listener onFinish##', event);
+    });
+    this.subscription.removeListener('onError', event => {
+      console.log('##removing listener onError##', event);
     });
   }
 }

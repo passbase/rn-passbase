@@ -1,6 +1,6 @@
 #import <React/RCTBridgeModule.h>
 
-@interface RCT_EXTERN_MODULE(RNPassbaseModule, NSObject)
+@interface RCT_EXTERN_MODULE(RNPassbaseSDK, NSObject)
 
 + (BOOL)requiresMainQueueSetup
 {
@@ -15,7 +15,7 @@
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"onCompletePassbaseVerification", @"onCancelPassbaseVerification", @"onStartPassbaseVerification"];
+  return @[@"onError", @"onFinish", @"onStart"];
 }
 
 - (NSDictionary *)constantsToExport
@@ -33,14 +33,14 @@
 
 RCT_EXTERN_METHOD(show:(NSString *)message)
 
-RCT_EXTERN_METHOD(initialize:(NSString *)apiKey email:(NSString *)email additionalParams:(NSDictionary *)additionalParams resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(setPrefillUserEmail:(NSString *)email)
 
-RCT_EXTERN_METHOD(initWithCB:(NSString *)apiKey email:(NSString *)email additionalParams:(NSDictionary *)additionalParams onSuccess:(RCTResponseSenderBlock)onSuccess onFailure:(RCTResponseSenderBlock)onFailure)
+RCT_EXTERN_METHOD(initialize:(NSString *)publishableApiKey resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(initWithCB:(NSString *)publishableApiKey onSuccess:(RCTResponseSenderBlock)onSuccess onFailure:(RCTResponseSenderBlock)onFailure)
 
 RCT_EXTERN_METHOD(startVerification:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(startVerificationWithCB:(RCTResponseSenderBlock)onSuccess onFailure:(RCTResponseSenderBlock)onFailure)
-
-RCT_EXTERN_METHOD(setTestMode: (BOOL)enabled)
 
 @end

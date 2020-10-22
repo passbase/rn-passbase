@@ -5,13 +5,13 @@ import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 
-import com.rnpassbase.passbasemodule.PassbaseModule
+import com.rnpassbase.passbasemodule.PassbaseSDK
 import com.rnpassbase.passbasecomponent.PassbaseComponentManager
 
 class RnPassbasePackage : ReactPackage {
   override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
     return listOf(
-      PassbaseModule(reactContext)
+      PassbaseSDK(reactContext)
     )
   }
 

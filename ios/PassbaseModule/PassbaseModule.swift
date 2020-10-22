@@ -1,63 +1,49 @@
 import Foundation
 import Passbase
 
-@objc (RNPassbaseModule)
-class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
-      @objc func show(_ message: String) {
+@objc (RNPassbaseSDK)
+class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
+    @objc func show(_ message: String) {
         print(message);
-      }
+    }
 
-    @objc func initialize(_ apiKey: String, email: String, additionalParams: NSDictionary, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
-        do {
-            if (!apiKey.isEmpty) {
-                Passbase.source = 2
+    @objc func setPrefillUserEmail(_ email: String) {
+        PassbaseSDK.prefillUserEmail = email;
+    }
 
-                Passbase.initialize(publishableApiKey: apiKey)
-                Passbase.delegate = self
-                Passbase.additionalAttributes = additionalParams as! [String : String]
-                Passbase.prefillUserEmail = email
-                var response = [String:Bool]()
-                response["success"] = true
-                resolve(response)
-            } else {
-                let error: NSError = NSError()
-                reject("error_initializing_passbase_sdk", "required_option_api_key_is_missing", error)
-            }
-        } catch {
+    @objc func initialize(_ publishableApiKey: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        if (!publishableApiKey.isEmpty) {
+            PassbaseSDK.source = 2
+            PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+            PassbaseSDK.delegate = self
+            var response = [String:Bool]()
+            response["success"] = true
+            resolve(response)
+        } else {
             let error: NSError = NSError()
-            reject("error_initializing_passbase_sdk", "error_initializing_passbase_sdk", error)
+            reject("error_initializing_passbase_sdk", "required_option_api_key_is_missing", error)
         }
     }
 
-    @objc func initWithCB(_ apiKey: String, email: String, additionalParams: NSDictionary, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
-        do {
-            if (!apiKey.isEmpty) {
-                Passbase.source = 2
-
-                Passbase.initialize(publishableApiKey: apiKey)
-                Passbase.delegate = self
-                Passbase.additionalAttributes = additionalParams as! [String : String]
-                Passbase.prefillUserEmail = email
-                var response = [String:Bool]()
-                response["success"] = true
-                onSuccess([response])
-            } else {
-                onFailure([[
-                    "error_initializing_passbase_sdk":"error_initializing_passbase_sdk",
-                    "message": "required_option_api_key_is_missing"
-                ]])
-            }
-        } catch {
-                onFailure([[
-                    "error_initializing_passbase_sdk":"error_initializing_passbase_sdk",
-                    "message": "error_initializing_passbase_sdk"
-                ]])
+    @objc func initWithCB(_ publishableApiKey: String, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
+        if (!publishableApiKey.isEmpty) {
+            PassbaseSDK.source = 2
+            PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+            PassbaseSDK.delegate = self
+            var response = [String:Bool]()
+            response["success"] = true
+            onSuccess([response])
+        } else {
+            onFailure([[
+                "error_initializing_passbase_sdk":"error_initializing_passbase_sdk",
+                "message": "required_option_api_key_is_missing"
+            ]])
         }
     }
 
     @objc func startVerification(_ resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         do {
-                try Passbase.startVerification(from: RCTPresentedViewController()!)
+            try PassbaseSDK.startVerification(from: RCTPresentedViewController()!)
             resolve(["success": true])
         } catch {
             reject("error_starting_verification", "error_starting_verification", NSError())
@@ -66,29 +52,23 @@ class PassbaseModule: RCTEventEmitter, PassbaseDelegate {
 
     @objc func startVerificationWithCB(_ onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
         do {
-                try Passbase.startVerification(from: RCTPresentedViewController()!)
+            try PassbaseSDK.startVerification(from: RCTPresentedViewController()!)
             onSuccess([["success": true]])
         } catch {
             onFailure([["error_starting_verification":"error_starting_verification"]])
         }
     }
 
-    /*
-    * Method to enable/disable setTestMode
-    * */
-    @objc func setTestMode(_ enabled: Bool) {
-        // ios sdk yet don't have this method exposed.
+
+    func onFinish (identityAccessKey: String) {
+        super.sendEvent(withName: "onFinish", body: ["identityAccessKey": identityAccessKey])
     }
 
-    func didCompletePassbaseVerification (authenticationKey: String) {
-        super.sendEvent(withName: "onCompletePassbaseVerification", body: ["authKey": authenticationKey])
+    func onError (errorCode: String) {
+        super.sendEvent(withName: "onError", body: ["errorCode": errorCode])
     }
 
-    func didCancelPassbaseVerification () {
-        super.sendEvent(withName: "onCancelPassbaseVerification", body: nil)
-    }
-
-    func didStartPassbaseVerification() {
-        super.sendEvent(withName: "onStartPassbaseVerification", body: nil)
+    func onStart() {
+        super.sendEvent(withName: "onStart", body: nil)
     }
 }

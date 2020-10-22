@@ -1,2 +1,2 @@
-export * from './PassbaseModule';
+export * from './PassbaseSDK';
 export * from './PassbaseComponent';
