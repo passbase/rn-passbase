@@ -28,7 +28,9 @@ const initialize = async (publishableApiKey: string, onSuccess: Function, onFail
   }
 }
 
-const setPrefillUserEmail = (email: string) => RNPassbaseSDK.setPrefillUserEmail(email);
+const setPrefillUserEmail = (email: string) => RNPassbaseSDK.setPrefillUserEmail(email)
+
+const setPrefillCountry = (country: string) => RNPassbaseSDK.setPrefillCountry(country)
 
 const startVerification = async (onSuccess: Function, onFailure: Function) => {
   // todo: make sure to chekc internet connection as verificaiton doesn't start without internet.
@@ -40,7 +42,7 @@ const startVerification = async (onSuccess: Function, onFailure: Function) => {
   }
   return RNPassbaseSDK.startVerification()
 }
-const show = (message: string) =>  RNPassbaseSDK.show(message);
+const show = (message: string) =>  RNPassbaseSDK.show(message)
 
 export const NativeModule = {
   ...RNPassbaseSDK,
@@ -48,6 +50,7 @@ export const NativeModule = {
   startVerification,
   show,
   setPrefillUserEmail,
+  setPrefillCountry,
   constants: {
     ERROR_INITIALIZING_PASSBASE: RNPassbaseSDK.ERROR_INITIALIZING_PASSBASE,
     INITIALZE_PASSBASE_TO_START_VERIFICATION: RNPassbaseSDK.INITIALZE_PASSBASE_TO_START_VERIFICATION,

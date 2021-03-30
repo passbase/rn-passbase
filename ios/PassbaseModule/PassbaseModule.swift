@@ -11,6 +11,10 @@ class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
         PassbaseSDK.prefillUserEmail = email;
     }
 
+    @objc func setPrefillCountry(_ country: String) {
+        PassbaseSDK.prefillCountry = country;
+    }
+
     @objc func initialize(_ publishableApiKey: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         if (!publishableApiKey.isEmpty) {
             PassbaseSDK.source = 2
