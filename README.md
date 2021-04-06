@@ -10,4 +10,5 @@ Official React-Native wrapper for Passbase SDK.
   - supported versions "<strong>&gt;= 0.61.5</strong>"
 
 ## Installation & Documentations
-For installation & usage follow [this link](https://docs.passbase.com/integrations/react-native)
+
+For installation & usage follow [this link](https://docs.passbase.com/react-native)
