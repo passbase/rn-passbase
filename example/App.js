@@ -27,9 +27,11 @@ class App extends React.Component {
     this.subscription.addListener('onFinish', event => {
       console.log('##onFinish##', event);
     });
-
     this.subscription.addListener('onStart', event => {
       console.log('##onStart##', event);
+    });
+    this.subscription.addListener('onSubmitted', event => {
+      console.log('##onSubmitted##', event);
     });
   }
 
