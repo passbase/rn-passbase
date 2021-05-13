@@ -40,8 +40,8 @@ dependencies {
     compileOnly "com.facebook.react:react-native:${_reactNativeVersion}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${_kotlinVersion}"
     implementation "com.airbnb.android:lottie:3.4.1"
-    implementation 'com.microblink:blinkid:5.8.0@aar'
-    implementation ('com.passbase:passbase_sdk:2.1.9') {
+    implementation 'com.microblink:blinkid:5.11.0@aar'
+    implementation ('com.passbase:passbase_sdk:2.2.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 }

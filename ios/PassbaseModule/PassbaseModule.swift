@@ -68,6 +68,10 @@ class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
         super.sendEvent(withName: "onFinish", body: ["identityAccessKey": identityAccessKey])
     }
 
+    func onSubmitted (identityAccessKey: String) {
+        super.sendEvent(withName: "onSubmitted", body: ["identityAccessKey": identityAccessKey])
+    }
+
     func onError (errorCode: String) {
         super.sendEvent(withName: "onError", body: ["errorCode": errorCode])
     }

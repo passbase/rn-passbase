@@ -59,10 +59,16 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
                 sendEvent(reactApplicationContext, "onStart", map);
               }
     
-              override fun onFinish(identityAccessKey: String?) {
+              override fun onFinish(identityAccessKey: String) {
                 val params = Arguments.createMap();
                 params.putString("identityAccessKey", identityAccessKey);
                 sendEvent(reactApplicationContext, "onFinish", params);
+              }
+
+              override fun onSubmitted(identityAccessKey: String) {
+                val params = Arguments.createMap();
+                params.putString("identityAccessKey", identityAccessKey);
+                sendEvent(reactApplicationContext, "onSubmitted", params);
               }
     
               override fun onError(errorCode: String) {
@@ -100,10 +106,16 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
                 sendEvent(reactApplicationContext, "onStart", map);
               }
     
-              override fun onFinish(identityAccessKey: String?) {
+              override fun onFinish(identityAccessKey: String) {
                 val params = Arguments.createMap();
                 params.putString("identityAccessKey", identityAccessKey);
                 sendEvent(reactApplicationContext, "onFinish", params);
+              }
+
+              override fun onSubmitted(identityAccessKey: String) {
+                val params = Arguments.createMap();
+                params.putString("identityAccessKey", identityAccessKey);
+                sendEvent(reactApplicationContext, "onSubmitted", params);
               }
     
               override fun onError(errorCode: String) {
@@ -131,7 +143,7 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
 
 
   @ReactMethod
-  fun setPrefillUserEmail (email: String, promise: Promise) {
+  fun setPrefillUserEmail (email: String?, promise: Promise) {
     try {
       if (passbaseRef == null) {
         throw Exception(INITIALZE_PASSBASE_TO_START_VERIFICATION)
@@ -147,7 +159,7 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
   }
   
   @ReactMethod
-  fun setPrefillCountry (country: String, promise: Promise) {
+  fun setPrefillCountry (country: String?, promise: Promise) {
     try {
       if (passbaseRef == null) {
         throw Exception(INITIALZE_PASSBASE_TO_START_VERIFICATION)

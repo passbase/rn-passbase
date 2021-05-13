@@ -15,7 +15,7 @@
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"onError", @"onFinish", @"onStart"];
+  return @[@"onError", @"onFinish", @"onStart", @"onSubmitted"];
 }
 
 - (NSDictionary *)constantsToExport
