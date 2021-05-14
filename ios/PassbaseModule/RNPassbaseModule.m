@@ -35,6 +35,8 @@ RCT_EXTERN_METHOD(show:(NSString *)message)
 
 RCT_EXTERN_METHOD(setPrefillUserEmail:(NSString *)email)
 
+RCT_EXTERN_METHOD(setMetaData:(NSString *)metaData)
+
 RCT_EXTERN_METHOD(setPrefillCountry:(NSString *)country)
 
 RCT_EXTERN_METHOD(initialize:(NSString *)publishableApiKey resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)

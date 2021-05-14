@@ -30,6 +30,8 @@ const initialize = async (publishableApiKey: string, onSuccess: Function, onFail
 
 const setPrefillUserEmail = (email: string) => RNPassbaseSDK.setPrefillUserEmail(email)
 
+const setMetaData = (metaData: string) => RNPassbaseSDK.setMetaData(metaData)
+
 const setPrefillCountry = (country: string) => RNPassbaseSDK.setPrefillCountry(country)
 
 const startVerification = async (onSuccess: Function, onFailure: Function) => {
@@ -50,6 +52,7 @@ export const NativeModule = {
   startVerification,
   show,
   setPrefillUserEmail,
+  setMetaData,
   setPrefillCountry,
   constants: {
     ERROR_INITIALIZING_PASSBASE: RNPassbaseSDK.ERROR_INITIALIZING_PASSBASE,
