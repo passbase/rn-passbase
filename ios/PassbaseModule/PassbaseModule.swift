@@ -11,6 +11,10 @@ class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
         PassbaseSDK.prefillUserEmail = email;
     }
 
+    @objc func setMetaData(_ metaData: String) {
+        PassbaseSDK.metaData = metaData;
+    }
+
     @objc func setPrefillCountry(_ country: String) {
         PassbaseSDK.prefillCountry = country;
     }
