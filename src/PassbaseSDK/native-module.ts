@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native'
 const { RNPassbaseSDK } = NativeModules
 
-const initialize = async (publishableApiKey: string, onSuccess: Function, onFailure: Function) => {
+const initialize = async (publishableApiKey: string, customerPayload: string, onSuccess: Function, onFailure: Function) => {
   const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
     (onFailure && typeof onFailure === 'function')
 
@@ -11,10 +11,14 @@ const initialize = async (publishableApiKey: string, onSuccess: Function, onFail
       throw new Error(RNPassbaseSDK.REQUIRED_OPTION_API_KEY_MISSING)
     }
 
+    if (!customerPayload) {
+      throw new Error(RNPassbaseSDK.REQUIRED_OPTION_API_KEY_MISSING)
+    }
+
     if (isCallbackBased) {
-      return RNPassbaseSDK.initWithCB(publishableApiKey, onSuccess, onFailure)
+      return RNPassbaseSDK.initWithCB(publishableApiKey, customerPayload, onSuccess, onFailure)
     } else {
-      return RNPassbaseSDK.initialize(publishableApiKey)
+      return RNPassbaseSDK.initialize(publishableApiKey, customerPayload)
     }
 
   } catch (ex) {
@@ -29,10 +33,6 @@ const initialize = async (publishableApiKey: string, onSuccess: Function, onFail
 }
 
 const setPrefillUserEmail = (email: string) => RNPassbaseSDK.setPrefillUserEmail(email)
-
-const setMetaData = (metaData: string) => RNPassbaseSDK.setMetaData(metaData)
-
-const setPrefillCountry = (country: string) => RNPassbaseSDK.setPrefillCountry(country)
 
 const startVerification = async (onSuccess: Function, onFailure: Function) => {
   // todo: make sure to chekc internet connection as verificaiton doesn't start without internet.
@@ -52,14 +52,13 @@ export const NativeModule = {
   startVerification,
   show,
   setPrefillUserEmail,
-  setMetaData,
-  setPrefillCountry,
   constants: {
     ERROR_INITIALIZING_PASSBASE: RNPassbaseSDK.ERROR_INITIALIZING_PASSBASE,
     INITIALZE_PASSBASE_TO_START_VERIFICATION: RNPassbaseSDK.INITIALZE_PASSBASE_TO_START_VERIFICATION,
     ERROR_START_VERIFICATION: RNPassbaseSDK.ERROR_START_VERIFICATION,
     VERIFICATION_CANCELLED: RNPassbaseSDK.VERIFICATION_CANCELLED,
     REQUIRED_OPTION_API_KEY_MISSING: RNPassbaseSDK.REQUIRED_OPTION_API_KEY_MISSING,
+    REQUIRED_OPTION_CUSTOMER_PAYLOAD_MISSING: RNPassbaseSDK.REQUIRED_OPTION_CUSTOMER_PAYLOAD_MISSING,
     SUCCESS: RNPassbaseSDK.SUCCESS,
     ERROR: RNPassbaseSDK.ERROR
   }

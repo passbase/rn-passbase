@@ -11,18 +11,10 @@ class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
         PassbaseSDK.prefillUserEmail = email;
     }
 
-    @objc func setMetaData(_ metaData: String?) {
-        PassbaseSDK.metaData = metaData;
-    }
-
-    @objc func setPrefillCountry(_ country: String?) {
-        PassbaseSDK.prefillCountry = country;
-    }
-
-    @objc func initialize(_ publishableApiKey: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
-        if (!publishableApiKey.isEmpty) {
+    @objc func initialize(_ publishableApiKey: String, _ customerPayload: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        if (!publishableApiKey.isEmpty && !customerPayload.isEmpty) {
             PassbaseSDK.source = 2
-            PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+            PassbaseSDK.initialize(publishableApiKey: publishableApiKey, customerPayload: customerPayload)
             PassbaseSDK.delegate = self
             var response = [String:Bool]()
             response["success"] = true
@@ -33,10 +25,10 @@ class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
         }
     }
 
-    @objc func initWithCB(_ publishableApiKey: String, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
+    @objc func initWithCB(_ publishableApiKey: String, _ customerPayload: String, onSuccess: RCTResponseSenderBlock, onFailure: RCTResponseSenderBlock) {
         if (!publishableApiKey.isEmpty) {
             PassbaseSDK.source = 2
-            PassbaseSDK.initialize(publishableApiKey: publishableApiKey)
+            PassbaseSDK.initialize(publishableApiKey: publishableApiKey, customerPayload: customerPayload)
             PassbaseSDK.delegate = self
             var response = [String:Bool]()
             response["success"] = true
@@ -68,16 +60,16 @@ class RNPassbaseSDK: RCTEventEmitter, PassbaseDelegate {
     }
 
 
-    func onFinish (identityAccessKey: String) {
-        super.sendEvent(withName: "onFinish", body: ["identityAccessKey": identityAccessKey])
+    func onFinish () {
+        super.sendEvent(withName: "onFinish", body: nil)
     }
 
-    func onSubmitted (identityAccessKey: String) {
-        super.sendEvent(withName: "onSubmitted", body: ["identityAccessKey": identityAccessKey])
+    func onSubmitted () {
+        super.sendEvent(withName: "onSubmitted", body: nil)
     }
 
-    func onError (errorCode: String) {
-        super.sendEvent(withName: "onError", body: ["errorCode": errorCode])
+    func onError () {
+        super.sendEvent(withName: "onError", body: nil)
     }
 
     func onStart() {
