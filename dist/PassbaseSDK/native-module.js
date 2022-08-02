@@ -8,18 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { NativeModules } from 'react-native';
 const { RNPassbaseSDK } = NativeModules;
-const initialize = (publishableApiKey, onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
+const initialize = (publishableApiKey, customerPayload, onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
         (onFailure && typeof onFailure === 'function');
     try {
         if (!publishableApiKey) {
             throw new Error(RNPassbaseSDK.REQUIRED_OPTION_API_KEY_MISSING);
         }
+        if (!customerPayload) {
+            throw new Error(RNPassbaseSDK.REQUIRED_OPTION_API_KEY_MISSING);
+        }
         if (isCallbackBased) {
-            return RNPassbaseSDK.initWithCB(publishableApiKey, onSuccess, onFailure);
+            return RNPassbaseSDK.initWithCB(publishableApiKey, customerPayload, onSuccess, onFailure);
         }
         else {
-            return RNPassbaseSDK.initialize(publishableApiKey);
+            return RNPassbaseSDK.initialize(publishableApiKey, customerPayload);
         }
     }
     catch (ex) {
@@ -32,8 +35,6 @@ const initialize = (publishableApiKey, onSuccess, onFailure) => __awaiter(this, 
     }
 });
 const setPrefillUserEmail = (email) => RNPassbaseSDK.setPrefillUserEmail(email);
-const setPrefillCountry = (country) => RNPassbaseSDK.setPrefillCountry(country);
-const setMetaData = (metaData) => RNPassbaseSDK.setMetaData(metaData);
 const startVerification = (onSuccess, onFailure) => __awaiter(this, void 0, void 0, function* () {
     // todo: make sure to chekc internet connection as verificaiton doesn't start without internet.
     const isCallbackBased = (onSuccess && typeof onSuccess === 'function') ||
@@ -47,9 +48,7 @@ const show = (message) => RNPassbaseSDK.show(message);
 export const NativeModule = Object.assign({}, RNPassbaseSDK, { initialize,
     startVerification,
     show,
-    setPrefillUserEmail,
-    setMetaData,
-    setPrefillCountry, constants: {
+    setPrefillUserEmail, constants: {
         ERROR_INITIALIZING_PASSBASE: RNPassbaseSDK.ERROR_INITIALIZING_PASSBASE,
         INITIALZE_PASSBASE_TO_START_VERIFICATION: RNPassbaseSDK.INITIALZE_PASSBASE_TO_START_VERIFICATION,
         ERROR_START_VERIFICATION: RNPassbaseSDK.ERROR_START_VERIFICATION,

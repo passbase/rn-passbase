@@ -21,6 +21,7 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
     const val ERROR_START_VERIFICATION = "error_starting_verification"
     const val VERIFICATION_CANCELLED = "verification_cancelled"
     const val REQUIRED_OPTION_API_KEY_MISSING = "required_option_api_key_is_missing"
+    const val REQUIRED_OPTION_CUSTOMER_PAYLOAD_MISSING = "required_option_customer_payload_is_missing"
     const val SUCCESS = "success"
     const val ERROR = "error"
 
@@ -36,6 +37,7 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
   override fun getConstants(): Map<String, Any>? {
     val constants: MutableMap<String, Any> = HashMap()
     constants["REQUIRED_OPTION_API_KEY_MISSING"] = REQUIRED_OPTION_API_KEY_MISSING
+    constants["REQUIRED_OPTION_CUSTOMER_PAYLOAD_MISSING"] = REQUIRED_OPTION_CUSTOMER_PAYLOAD_MISSING
     constants["ERROR_INITIALIZING_PASSBASE"] = ERROR_INITIALIZING_PASSBASE
     constants["INITIALZE_PASSBASE_TO_START_VERIFICATION"] = INITIALZE_PASSBASE_TO_START_VERIFICATION
     constants["ERROR_START_VERIFICATION"] = ERROR_START_VERIFICATION
@@ -47,7 +49,7 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
 
   // Promise based implementation of init method
   @ReactMethod
-  fun initialize (publishableApiKey: String, promise: Promise) {
+  fun initialize (publishableApiKey: String, customerPayload: String, promise: Promise) {
     try {
       PassbaseSDK.source = 2
 
@@ -59,27 +61,24 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
                 sendEvent(reactApplicationContext, "onStart", map);
               }
     
-              override fun onFinish(identityAccessKey: String) {
+              override fun onFinish() {
                 val params = Arguments.createMap();
-                params.putString("identityAccessKey", identityAccessKey);
                 sendEvent(reactApplicationContext, "onFinish", params);
               }
 
-              override fun onSubmitted(identityAccessKey: String) {
+              override fun onSubmitted() {
                 val params = Arguments.createMap();
-                params.putString("identityAccessKey", identityAccessKey);
                 sendEvent(reactApplicationContext, "onSubmitted", params);
               }
     
-              override fun onError(errorCode: String) {
+              override fun onError() {
                 val params = Arguments.createMap();
-                params.putString("errorCode", errorCode);
                 sendEvent(reactApplicationContext, "onError", params);
               }
         })
       }
 
-      passbaseRef!!.initialize(publishableApiKey)
+      passbaseRef!!.initialize(publishableApiKey, customerPayload)
 
       val map = Arguments.createMap()
       map.putBoolean(SUCCESS, true)
@@ -94,7 +93,7 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
   // due to some unknown reasons. so to avoid I've changed name of this & in JS I kept single name & called
   // native methods conditionally. can check `src/PassbaseSDK/native-modules.ts`
   @ReactMethod
-  fun initWithCB (publishableApiKey: String, onSuccess: Callback, onFailure: Callback) {
+  fun initWithCB (publishableApiKey: String, customerPayload: String, onSuccess: Callback, onFailure: Callback) {
     try {
       PassbaseSDK.source = 2
 
@@ -106,21 +105,18 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
                 sendEvent(reactApplicationContext, "onStart", map);
               }
     
-              override fun onFinish(identityAccessKey: String) {
+              override fun onFinish() {
                 val params = Arguments.createMap();
-                params.putString("identityAccessKey", identityAccessKey);
                 sendEvent(reactApplicationContext, "onFinish", params);
               }
 
-              override fun onSubmitted(identityAccessKey: String) {
+              override fun onSubmitted() {
                 val params = Arguments.createMap();
-                params.putString("identityAccessKey", identityAccessKey);
                 sendEvent(reactApplicationContext, "onSubmitted", params);
               }
     
-              override fun onError(errorCode: String) {
+              override fun onError() {
                 val params = Arguments.createMap();
-                params.putString("errorCode", errorCode);
                 sendEvent(reactApplicationContext, "onError", params);
               }
         })
@@ -128,7 +124,7 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
       }
 
 
-      passbaseRef!!.initialize(publishableApiKey)
+      passbaseRef!!.initialize(publishableApiKey, customerPayload)
 
       val map = Arguments.createMap()
       map.putBoolean(SUCCESS, true)
@@ -150,38 +146,6 @@ class PassbaseSDK(context: ReactApplicationContext) : ReactContextBaseJavaModule
       }
 
       passbaseRef!!.prefillUserEmail = email;
-      val map = Arguments.createMap()
-      map.putBoolean(SUCCESS, true)
-      promise.resolve(map)
-    } catch (e: Exception) {
-      promise.reject(ERROR_START_VERIFICATION, e)
-    }
-  }
-  
-  @ReactMethod
-  fun setPrefillCountry (country: String?, promise: Promise) {
-    try {
-      if (passbaseRef == null) {
-        throw Exception(INITIALZE_PASSBASE_TO_START_VERIFICATION)
-      }
-
-      passbaseRef!!.prefillCountry = country;
-      val map = Arguments.createMap()
-      map.putBoolean(SUCCESS, true)
-      promise.resolve(map)
-    } catch (e: Exception) {
-      promise.reject(ERROR_START_VERIFICATION, e)
-    }
-  }
-
-  @ReactMethod
-  fun setMetaData (metaData: String?, promise: Promise) {
-    try {
-      if (passbaseRef == null) {
-        throw Exception(INITIALZE_PASSBASE_TO_START_VERIFICATION)
-      }
-
-      passbaseRef!!.metaData = metaData;
       val map = Arguments.createMap()
       map.putBoolean(SUCCESS, true)
       promise.resolve(map)

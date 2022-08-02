@@ -1,10 +1,10 @@
 import React from 'react'
 import { NativeProps, NativeComponent } from './native-component'
 
-type Props = NativeProps
+type Props = any
 
 const RefComponent = (props: Props, forwardedRef?: React.Ref<React.Component<NativeProps>>) => {
-  const { style, ...restProps } = props || {}
+  const { style, ...restProps } = props || {} as any
   const styles = { width: 300, height: 60, ...style }
   restProps.style = styles
   return <NativeComponent

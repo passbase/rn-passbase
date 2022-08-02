@@ -9,7 +9,7 @@ def _compileSdkVersion = _ext.has('compileSdkVersion') ? _ext.compileSdkVersion 
 def _buildToolsVersion = _ext.has('buildToolsVersion') ? _ext.buildToolsVersion : '28.0.3'
 def _minSdkVersion = _ext.has('minSdkVersion') ? _ext.minSdkVersion : 21
 def _targetSdkVersion = _ext.has('targetSdkVersion') ? _ext.targetSdkVersion : 28
-def _kotlinVersion = _ext.has('kotlinVersion') ? _ext.kotlinVersion : '1.3.61'
+def _kotlinVersion = _ext.has('kotlinVersion') ? _ext.kotlinVersion : '1.6.0'
 
 android {
     compileSdkVersion _compileSdkVersion
@@ -41,5 +41,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${_kotlinVersion}"
     implementation "com.airbnb.android:lottie:3.4.1"
     implementation 'com.microblink:blinkid:5.16.0@aar'
-    implementation ('com.passbase:passbase_sdk:2.13.3')
+    implementation ('com.passbase:passbase_sdk:3.1.0')
 }
