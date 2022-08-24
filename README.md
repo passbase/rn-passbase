@@ -2,6 +2,8 @@
 
 Official React-Native wrapper for Passbase SDK.
 
+> Only customers on the Passbase Enterprise beta program should use V3 of the SDK. If you are not on the Passbase Enteprise beta program, you should use V2 of the SDK as V3 contains breaking changes.
+
 ## Status
 
 - iOS & Android:
