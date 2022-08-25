@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
   s.swift_version    = '5.0'
 
   s.dependency 'React'
-  s.dependency 'Passbase', '3.1.0'
+  s.dependency 'Passbase', '3.2.0'
 end
 

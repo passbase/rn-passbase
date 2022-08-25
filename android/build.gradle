@@ -39,7 +39,7 @@ android {
 dependencies {
     compileOnly "com.facebook.react:react-native:${_reactNativeVersion}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${_kotlinVersion}"
-    implementation "com.airbnb.android:lottie:3.4.1"
+    implementation "com.airbnb.android:lottie:5.2.0"
     implementation 'com.microblink:blinkid:5.16.0@aar'
-    implementation ('com.passbase:passbase_sdk:3.1.0')
+    implementation ('com.passbase:passbase_sdk:3.2.0')
 }
